@@ -10,7 +10,7 @@ module.exports = {
       colors: {
         primary: {
           start: "#A5ECD0",
-          end: "#3BB8A8",
+          end: "#00BCD4",
         },
         cta: "#3B82F6",
         bg: {
@@ -22,7 +22,7 @@ module.exports = {
         },
       },
       backgroundImage: {
-        "gradient-primary": "linear-gradient(to right, #A5ECD0, #3BB8A8)",
+        "gradient-primary": "linear-gradient(to right, #A5ECD0, #00BCD4)",
       },
     },
   },
