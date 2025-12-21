@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { isLoggedIn, getProgress } from "../../lib/progress/store.js";
 import { getFormationById } from "../../lib/mock/formations.js";
 import { getFormationProgress, getTCProgress } from "../../lib/selectors/formations.js";
@@ -11,7 +11,7 @@ import Button from "../../components/Button.js";
 import ProgressBar from "../../components/ProgressBar.js";
 import TCCounter from "../../components/TCCounter.js";
 
-export default function RoadmapPage() {
+function RoadmapContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const formationId = searchParams.get("formationId");
@@ -170,6 +170,25 @@ export default function RoadmapPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function RoadmapPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#F9FAFB] p-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center py-12">
+              <div className="inline-block w-8 h-8 border-4 border-pink-200 border-t-[#F955D5] rounded-full animate-spin mb-4" />
+              <p className="text-gray-600">Chargement...</p>
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <RoadmapContent />
+    </Suspense>
   );
 }
 
