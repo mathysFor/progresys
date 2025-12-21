@@ -62,7 +62,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-teal-50/30 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 rounded-full border-4 border-teal-200 border-t-[#387d81] animate-spin" />
+          <div className="w-12 h-12 rounded-full border-4 border-teal-200 border-t-[#2D6A6E] animate-spin" />
           <p className="text-slate-500 font-medium">Chargement de vos formations...</p>
         </div>
       </div>
@@ -213,8 +213,8 @@ export default function DashboardPage() {
                         />
                         <defs>
                           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#A8E6CF" />
-                          <stop offset="100%" stopColor="#387d81" />
+                          <stop offset="0%" stopColor="#6BC4C4" />
+                          <stop offset="100%" stopColor="#2D6A6E" />
                           </linearGradient>
                         </defs>
                       </svg>

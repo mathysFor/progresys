@@ -9,8 +9,8 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          start: "#A8E6CF",
-          end: "#387d81",
+          start: "#6BC4C4",
+          end: "#2D6A6E",
         },
         cta: "#3B82F6",
         bg: {
@@ -22,7 +22,7 @@ module.exports = {
         },
       },
       backgroundImage: {
-        "gradient-primary": "linear-gradient(to right, #A8E6CF, #387d81)",
+        "gradient-primary": "linear-gradient(to right, #6BC4C4, #2D6A6E)",
       },
     },
   },

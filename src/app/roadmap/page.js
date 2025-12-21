@@ -180,7 +180,7 @@ export default function RoadmapPage() {
         <div className="min-h-screen bg-[#F9FAFB] p-4">
           <div className="max-w-7xl mx-auto">
             <div className="text-center py-12">
-              <div className="inline-block w-8 h-8 border-4 border-teal-200 border-t-[#387d81] rounded-full animate-spin mb-4" />
+              <div className="inline-block w-8 h-8 border-4 border-teal-200 border-t-[#2D6A6E] rounded-full animate-spin mb-4" />
               <p className="text-gray-600">Chargement...</p>
             </div>
           </div>
