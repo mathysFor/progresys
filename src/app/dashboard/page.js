@@ -60,9 +60,9 @@ export default function DashboardPage() {
 
   if (formations.length === 0) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-pink-50/30 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-teal-50/30 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 rounded-full border-4 border-pink-200 border-t-[#F955D5] animate-spin" />
+          <div className="w-12 h-12 rounded-full border-4 border-teal-200 border-t-[#387d81] animate-spin" />
           <p className="text-slate-500 font-medium">Chargement de vos formations...</p>
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-pink-50/30">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-teal-50/30">
       {/* Header with pattern */}
       <header className="relative overflow-hidden">
         {/* Background gradient */}
@@ -86,7 +86,7 @@ export default function DashboardPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <p className="text-pink-100 text-sm font-medium mb-1">
+              <p className="text-teal-100 text-sm font-medium mb-1">
                 Bienvenue, {user?.name || "Apprenant"}
               </p>
               <h1 className="text-3xl lg:text-4xl font-bold text-white tracking-tight">
@@ -104,11 +104,11 @@ export default function DashboardPage() {
           {/* Stats bar */}
           <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
-              <p className="text-pink-100 text-xs font-medium uppercase tracking-wider">Formations</p>
+              <p className="text-teal-100 text-xs font-medium uppercase tracking-wider">Formations</p>
               <p className="text-white text-2xl font-bold mt-1">{formations.length}</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
-              <p className="text-pink-100 text-xs font-medium uppercase tracking-wider">En cours</p>
+              <p className="text-teal-100 text-xs font-medium uppercase tracking-wider">En cours</p>
               <p className="text-white text-2xl font-bold mt-1">
                 {formations.filter(f => {
                   const p = getFormationProgress(f.id, userProgress);
@@ -117,7 +117,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
-              <p className="text-pink-100 text-xs font-medium uppercase tracking-wider">Terminées</p>
+              <p className="text-teal-100 text-xs font-medium uppercase tracking-wider">Terminées</p>
               <p className="text-white text-2xl font-bold mt-1">
                 {formations.filter(f => {
                   const p = getFormationProgress(f.id, userProgress);
@@ -126,7 +126,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
-              <p className="text-pink-100 text-xs font-medium uppercase tracking-wider">Temps total</p>
+              <p className="text-teal-100 text-xs font-medium uppercase tracking-wider">Temps total</p>
               <p className="text-white text-2xl font-bold mt-1">
                 {formatTimeReadable(
                   formations.reduce((acc, f) => {
@@ -213,8 +213,8 @@ export default function DashboardPage() {
                         />
                         <defs>
                           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#F955D5" />
-                            <stop offset="100%" stopColor="#506199" />
+                          <stop offset="0%" stopColor="#A8E6CF" />
+                          <stop offset="100%" stopColor="#387d81" />
                           </linearGradient>
                         </defs>
                       </svg>
@@ -248,7 +248,7 @@ export default function DashboardPage() {
                   <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-100">
                     <button
                       onClick={() => handleResume(formation.id)}
-                      className="flex-1 min-w-[140px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl gradient-primary text-white font-semibold shadow-lg shadow-pink-500/25 hover:shadow-xl hover:shadow-pink-500/30 hover:-translate-y-0.5 transition-all duration-200"
+                      className="flex-1 min-w-[140px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl gradient-primary text-white font-semibold shadow-lg shadow-teal-500/25 hover:shadow-xl hover:shadow-teal-500/30 hover:-translate-y-0.5 transition-all duration-200"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
