@@ -1,19 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { isLoggedIn } from "../lib/progress/store.js";
+import { useState } from "react";
 
 export default function LandingPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("packs");
 
-  useEffect(() => {
-    // If already logged in, redirect to dashboard
-    if (isLoggedIn()) {
-      router.push("/dashboard");
-    }
-  }, [router]);
 
   const packs = [
     {
