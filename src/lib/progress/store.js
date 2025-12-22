@@ -4,6 +4,7 @@ const STORAGE_KEYS = {
   ENTITLEMENTS: "elearning_entitlements",
   PROGRESS: "elearning_progress",
   LAST_COURSES: "elearning_lastCourses",
+  REGISTRATION: "elearning_registrationData",
 };
 
 /**
@@ -181,5 +182,45 @@ export function initDefaultSession() {
   
   // MVP: All formations accessible
   setEntitlements(["iobsp", "dda"]);
+}
+
+/**
+ * Save registration data
+ * @param {Object} formData - Registration form data
+ * @param {string} formData.lastName
+ * @param {string} formData.firstName
+ * @param {string} formData.phone
+ * @param {string} formData.birthDate
+ * @param {string} formData.birthPlace
+ * @param {string} formData.address
+ * @param {string} formData.email
+ * @param {boolean} formData.paidByCompany
+ */
+export function saveRegistrationData(formData) {
+  if (typeof window === "undefined") return;
+  
+  const registrationData = {
+    ...formData,
+    submittedAt: new Date().toISOString(),
+  };
+  
+  localStorage.setItem(STORAGE_KEYS.REGISTRATION, JSON.stringify(registrationData));
+}
+
+/**
+ * Get registration data
+ * @returns {Object|null} Registration data or null
+ */
+export function getRegistrationData() {
+  if (typeof window === "undefined") return null;
+  
+  const registrationStr = localStorage.getItem(STORAGE_KEYS.REGISTRATION);
+  if (!registrationStr) return null;
+  
+  try {
+    return JSON.parse(registrationStr);
+  } catch {
+    return null;
+  }
 }
 

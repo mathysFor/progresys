@@ -2,7 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { isLoggedIn, getProgress, clearUserSession, getUserSession } from "../../lib/progress/store.js";
+import { getProgress, getUserSession, getEntitlements } from "../../lib/progress/store-firebase.js";
+import { signOut } from "../../lib/firebase/auth.js";
+import { useAuthState } from "../../lib/hooks/useAuthState.js";
 import { getFormations } from "../../lib/mock/formations.js";
 import { getFormationProgress, getTCProgress } from "../../lib/selectors/formations.js";
 import { getResumeCourse, hasPdfContent, getPdfContent } from "../../lib/selectors/courses.js";
@@ -12,25 +14,65 @@ import TCCounter from "../../components/TCCounter.js";
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { user: authUser, loading: authLoading } = useAuthState();
   const [formations, setFormations] = useState([]);
   const [userProgress, setUserProgress] = useState({});
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isLoggedIn()) {
-      router.push("/login");
-      return;
-    }
+    const loadData = async () => {
+      // Wait for auth state to be determined
+      if (authLoading) {
+        return;
+      }
 
-    const entitlements = null;
-    const loadedFormations = getFormations(entitlements);
-    const progress = getProgress();
-    const session = getUserSession();
+      if (!authUser) {
+        router.push("/login");
+        return;
+      }
 
-    setFormations(loadedFormations);
-    setUserProgress(progress);
-    setUser(session);
-  }, [router]);
+      try {
+        console.log("Loading dashboard data...");
+        
+        // Load user session
+        const sessionResult = await getUserSession();
+        console.log("User session result:", sessionResult);
+        if (sessionResult.error) {
+          console.error("Error loading user session:", sessionResult.error);
+        } else {
+          setUser(sessionResult.data);
+        }
+
+        // Load entitlements
+        const entitlementsResult = await getEntitlements();
+        console.log("Entitlements result:", entitlementsResult);
+        const entitlements = entitlementsResult.data || null;
+
+        // Load formations
+        const loadedFormations = getFormations(entitlements);
+        console.log("Loaded formations:", loadedFormations);
+        setFormations(loadedFormations);
+
+        // Load progress
+        const progressResult = await getProgress();
+        console.log("Progress result:", progressResult);
+        if (progressResult.error) {
+          console.error("Error loading progress:", progressResult.error);
+          setUserProgress({});
+        } else {
+          setUserProgress(progressResult.data || {});
+        }
+      } catch (error) {
+        console.error("Error loading dashboard data:", error);
+      } finally {
+        console.log("Loading complete, setting isLoading to false");
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, [router, authUser, authLoading]);
 
   const handleResume = (formationId) => {
     const resumeCourse = getResumeCourse(formationId, userProgress);
@@ -53,17 +95,39 @@ export default function DashboardPage() {
     }
   };
 
-  const handleLogout = () => {
-    clearUserSession();
+  const handleLogout = async () => {
+    await signOut();
     router.push("/login");
   };
 
-  if (formations.length === 0) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-teal-50/30 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 rounded-full border-4 border-teal-200 border-t-[#00BCD4] animate-spin" />
           <p className="text-slate-500 font-medium">Chargement de vos formations...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Afficher un message si aucune formation après le chargement
+  if (formations.length === 0) {
+    return (
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-teal-50/30 flex items-center justify-center">
+        <div className="text-center max-w-md px-4">
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">
+            Aucune formation disponible
+          </h2>
+          <p className="text-slate-600 mb-6">
+            Vous n&apos;avez pas encore accès à des formations. Contactez l&apos;administrateur pour obtenir un accès.
+          </p>
+          <button
+            onClick={handleLogout}
+            className="cursor-pointer px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition-colors"
+          >
+            Retour à la connexion
+          </button>
         </div>
       </div>
     );
@@ -86,16 +150,16 @@ export default function DashboardPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <p className="text-teal-100 text-sm font-medium mb-1">
-                Bienvenue, {user?.name || "Apprenant"}
+              <p className="text-teal-800 text-sm font-medium mb-1">
+                Bienvenue, {user?.firstName || user?.name || "Apprenant"}
               </p>
-              <h1 className="text-3xl lg:text-4xl font-bold text-white tracking-tight">
+              <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
                 Mes Formations
               </h1>
             </div>
             <button
               onClick={handleLogout}
-              className="self-start sm:self-auto px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium hover:bg-white/20 transition-all duration-200"
+              className="cursor-pointer self-start sm:self-auto px-5 py-2.5 rounded-full bg-slate-900/80 backdrop-blur-sm border border-slate-900/20 text-white text-sm font-medium hover:bg-slate-900 transition-all duration-200"
             >
               Déconnexion
             </button>
@@ -103,31 +167,31 @@ export default function DashboardPage() {
           
           {/* Stats bar */}
           <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
-              <p className="text-teal-100 text-xs font-medium uppercase tracking-wider">Formations</p>
-              <p className="text-white text-2xl font-bold mt-1">{formations.length}</p>
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/50 shadow-lg">
+              <p className="text-teal-700 text-xs font-semibold uppercase tracking-wider">Formations</p>
+              <p className="text-slate-900 text-2xl font-bold mt-1">{formations.length}</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
-              <p className="text-teal-100 text-xs font-medium uppercase tracking-wider">En cours</p>
-              <p className="text-white text-2xl font-bold mt-1">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/50 shadow-lg">
+              <p className="text-teal-700 text-xs font-semibold uppercase tracking-wider">En cours</p>
+              <p className="text-slate-900 text-2xl font-bold mt-1">
                 {formations.filter(f => {
                   const p = getFormationProgress(f.id, userProgress);
                   return p.percentComplete > 0 && p.percentComplete < 100;
                 }).length}
               </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
-              <p className="text-teal-100 text-xs font-medium uppercase tracking-wider">Terminées</p>
-              <p className="text-white text-2xl font-bold mt-1">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/50 shadow-lg">
+              <p className="text-teal-700 text-xs font-semibold uppercase tracking-wider">Terminées</p>
+              <p className="text-slate-900 text-2xl font-bold mt-1">
                 {formations.filter(f => {
                   const p = getFormationProgress(f.id, userProgress);
                   return p.percentComplete >= 100;
                 }).length}
               </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
-              <p className="text-teal-100 text-xs font-medium uppercase tracking-wider">Temps total</p>
-              <p className="text-white text-2xl font-bold mt-1">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/50 shadow-lg">
+              <p className="text-teal-700 text-xs font-semibold uppercase tracking-wider">Temps total</p>
+              <p className="text-slate-900 text-2xl font-bold mt-1">
                 {formatTimeReadable(
                   formations.reduce((acc, f) => {
                     const p = getFormationProgress(f.id, userProgress);
@@ -248,7 +312,7 @@ export default function DashboardPage() {
                   <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-100">
                     <button
                       onClick={() => handleResume(formation.id)}
-                      className="flex-1 min-w-[140px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl gradient-primary text-white font-semibold shadow-lg shadow-teal-500/25 hover:shadow-xl hover:shadow-teal-500/30 hover:-translate-y-0.5 transition-all duration-200"
+                      className="cursor-pointer flex-1 min-w-[140px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl gradient-primary text-white font-semibold shadow-lg shadow-teal-500/25 hover:shadow-xl hover:shadow-teal-500/30 hover:-translate-y-0.5 transition-all duration-200"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
@@ -258,7 +322,7 @@ export default function DashboardPage() {
                     
                     <button
                       onClick={() => handleViewRoadmap(formation.id)}
-                      className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all duration-200"
+                      className="cursor-pointer inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all duration-200"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -269,7 +333,7 @@ export default function DashboardPage() {
                     {hasPdf && (
                       <button
                         onClick={() => handleDownload(formation.id)}
-                        className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-semibold hover:border-slate-300 hover:bg-slate-50 transition-all duration-200"
+                        className="cursor-pointer inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-semibold hover:border-slate-300 hover:bg-slate-50 transition-all duration-200"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

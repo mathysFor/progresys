@@ -1,5 +1,4 @@
 import { getFormationById } from "../mock/formations.js";
-import { getProgress, getCourseProgress } from "../progress/store.js";
 import { getCoursesForChapter } from "./courses.js";
 
 /**
@@ -33,11 +32,11 @@ function getAllCourses(formationId) {
 /**
  * Calculate global progress for a formation
  * @param {string} formationId - Formation ID
- * @param {Object} userProgress - Progress data (optional, will fetch if not provided)
+ * @param {Object} userProgress - Progress data from Firestore (progressByCourseId object). Required.
  * @returns {Object} { percentComplete, timeSpentSeconds, totalDurationSeconds }
  */
-export function getFormationProgress(formationId, userProgress = null) {
-  const progress = userProgress || getProgress();
+export function getFormationProgress(formationId, userProgress = {}) {
+  const progress = userProgress || {};
   const allCourses = getAllCourses(formationId);
   
   if (allCourses.length === 0) {
@@ -89,14 +88,14 @@ function isTCModule(module) {
 /**
  * Calculate Tronc Commun progress for a formation
  * @param {string} formationId - Formation ID
- * @param {Object} userProgress - Progress data (optional, will fetch if not provided)
+ * @param {Object} userProgress - Progress data from Firestore (progressByCourseId object). Required.
  * @returns {Object|null} { percentComplete, timeSpentSeconds, totalDurationSeconds } or null if no TC
  */
-export function getTCProgress(formationId, userProgress = null) {
+export function getTCProgress(formationId, userProgress = {}) {
   const formation = getFormationById(formationId);
   if (!formation) return null;
   
-  const progress = userProgress || getProgress();
+  const progress = userProgress || {};
   
   // Find TC module
   const tcModule = formation.modules.find((m) => isTCModule(m));

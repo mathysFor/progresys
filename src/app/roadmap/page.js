@@ -71,7 +71,7 @@ function RoadmapContent() {
             <Button
               onClick={() => router.push("/dashboard")}
               variant="secondary"
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white border-0 mb-4"
+              className="bg-white bg-opacity-20 cursor-pointer hover:bg-opacity-30 text-white border-0 mb-4"
             >
               ← Retour au dashboard
             </Button>
@@ -160,7 +160,7 @@ function RoadmapContent() {
                 <Button
                   onClick={() => router.push("/dashboard")}
                   variant="outline"
-                  className="w-full"
+                  className="w-full cursor-pointer "
                 >
                   Retour au dashboard
                 </Button>

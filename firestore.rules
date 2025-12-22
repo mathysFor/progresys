@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Collection users - chaque utilisateur peut uniquement lire/écrire ses propres données
+    match /users/{userId} {
+      // Seul l'utilisateur authentifié peut lire ses propres données
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Seul l'utilisateur authentifié peut créer/modifier ses propres données
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Collection progress - chaque utilisateur peut uniquement lire/écrire sa propre progression
+    match /progress/{userId} {
+      // Seul l'utilisateur authentifié peut lire sa propre progression
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Seul l'utilisateur authentifié peut créer/modifier sa propre progression
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Tous les autres documents sont refusés par défaut
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

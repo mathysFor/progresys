@@ -1,27 +1,18 @@
 /**
  * Format seconds to HH:MM:SS string
  * @param {number} seconds - Total seconds
- * @returns {string} Formatted time string (HH:MM:SS or MM:SS if < 1 hour)
+ * @returns {string} Formatted time string (always HH:MM:SS)
  */
 export function formatTime(seconds) {
   if (!seconds || seconds < 0) {
-    return "00:00";
+    return "00:00:00";
   }
 
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const secs = Math.floor(seconds % 60);
 
-  const parts = [];
-  
-  if (hours > 0) {
-    parts.push(String(hours).padStart(2, "0"));
-  }
-  
-  parts.push(String(minutes).padStart(2, "0"));
-  parts.push(String(secs).padStart(2, "0"));
-
-  return parts.join(":");
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
 /**
@@ -46,5 +37,33 @@ export function formatTimeReadable(seconds) {
   }
 
   return parts.length > 0 ? parts.join(" ") : "0min";
+}
+
+/**
+ * Format seconds to human readable string with seconds (e.g., "2h 30min 45s" or "45min 30s")
+ * @param {number} seconds - Total seconds
+ * @returns {string} Human readable time string with seconds
+ */
+export function formatTimeReadableWithSeconds(seconds) {
+  if (!seconds || seconds < 0) {
+    return "0s";
+  }
+
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+
+  const parts = [];
+  if (hours > 0) {
+    parts.push(`${hours}h`);
+  }
+  if (minutes > 0) {
+    parts.push(`${minutes}min`);
+  }
+  if (secs > 0 || parts.length === 0) {
+    parts.push(`${secs}s`);
+  }
+
+  return parts.join(" ");
 }
 

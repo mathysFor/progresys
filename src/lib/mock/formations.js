@@ -166,6 +166,100 @@ export const formations = [
     ],
   },
   {
+    id: "ias",
+    name: "IAS - Formation Longue",
+    type: "longue",
+    modules: [
+      {
+        id: "module-ias-1",
+        name: "Module 1: Fondamentaux",
+        chapters: [
+          {
+            id: "chapter-ias-1-1",
+            name: "Chapitre 1: Introduction",
+            subChapters: [
+              {
+                id: "subchapter-ias-1-1-1",
+                name: "Sous-chapitre 1.1: Notions de base",
+                courses: [
+                  {
+                    id: "course-ias-1-1-1-1",
+                    name: "Cours 1.1.1: Introduction générale",
+                    durationSeconds: 1800, // 30 minutes
+                    contents: [
+                      {
+                        id: "content-ias-1",
+                        type: "video",
+                        url: "https://example.com/video-ias-1-1-1-1.mp4",
+                        title: "Vidéo d'introduction",
+                      },
+                      {
+                        id: "content-ias-2",
+                        type: "pdf",
+                        url: "https://example.com/pdf-ias-1-1-1-1.pdf",
+                        title: "Support de cours",
+                      },
+                    ],
+                  },
+                  {
+                    id: "course-ias-1-1-1-2",
+                    name: "Cours 1.1.2: Concepts clés",
+                    durationSeconds: 2400, // 40 minutes
+                    contents: [
+                      {
+                        id: "content-ias-3",
+                        type: "video",
+                        url: "https://example.com/video-ias-1-1-1-2.mp4",
+                        title: "Vidéo concepts",
+                      },
+                      {
+                        id: "content-ias-4",
+                        type: "canva",
+                        url: "https://example.com/canva-ias-1-1-1-2",
+                        title: "Présentation Canva",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "module-ias-tc",
+        name: "Tronc Commun",
+        chapters: [
+          {
+            id: "chapter-ias-tc-1",
+            name: "Chapitre TC 1: Base commune",
+            subChapters: [
+              {
+                id: "subchapter-ias-tc-1-1",
+                name: "Sous-chapitre TC 1.1",
+                courses: [
+                  {
+                    id: "course-ias-tc-1-1-1",
+                    name: "Cours TC 1.1.1",
+                    durationSeconds: 1500, // 25 minutes
+                    contents: [
+                      {
+                        id: "content-ias-tc-1",
+                        type: "video",
+                        url: "https://example.com/video-ias-tc-1.mp4",
+                        title: "Vidéo TC",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: "dda",
     name: "DDA - Formation Courte",
     type: "courte",
@@ -272,11 +366,102 @@ export const formations = [
       },
     ],
   },
+  {
+    id: "lab",
+    name: "LAB - Formation Courte",
+    type: "courte",
+    modules: [
+      {
+        id: "module-lab-1",
+        name: "Module 1: Bases",
+        chapters: [
+          {
+            id: "chapter-lab-1-1",
+            name: "Chapitre 1: Introduction",
+            courses: [
+              {
+                id: "course-lab-1-1-1",
+                name: "Cours LAB 1.1.1: Introduction",
+                durationSeconds: 1200, // 20 minutes
+                contents: [
+                  {
+                    id: "content-lab-1",
+                    type: "video",
+                    url: "https://example.com/video-lab-1.mp4",
+                    title: "Vidéo introduction LAB",
+                  },
+                  {
+                    id: "content-lab-2",
+                    type: "pdf",
+                    url: "https://example.com/pdf-lab-1.pdf",
+                    title: "Support LAB",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "dci",
+    name: "DCI - Formation Courte",
+    type: "courte",
+    modules: [
+      {
+        id: "module-dci-1",
+        name: "Module 1: Bases",
+        chapters: [
+          {
+            id: "chapter-dci-1-1",
+            name: "Chapitre 1: Introduction",
+            courses: [
+              {
+                id: "course-dci-1-1-1",
+                name: "Cours DCI 1.1.1: Introduction",
+                durationSeconds: 1200, // 20 minutes
+                contents: [
+                  {
+                    id: "content-dci-1",
+                    type: "video",
+                    url: "https://example.com/video-dci-1.mp4",
+                    title: "Vidéo introduction DCI",
+                  },
+                  {
+                    id: "content-dci-2",
+                    type: "pdf",
+                    url: "https://example.com/pdf-dci-1.pdf",
+                    title: "Support DCI",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 // Helper to get formation by ID
 export function getFormationById(formationId) {
   return formations.find((f) => f.id === formationId);
+}
+
+/**
+ * Map formation IDs from config format to mock format
+ * Converts IDs like "iobsp-1" to "iobsp", "ias-1" to "ias", etc.
+ */
+function mapFormationId(formationId) {
+  // Mapping des IDs de config vers mock
+  const idMapping = {
+    "iobsp-1": "iobsp",
+    "ias-1": "ias",
+    // Les autres IDs restent identiques (dci, dda, lab)
+  };
+  
+  return idMapping[formationId] || formationId;
 }
 
 // Helper to get all formations (filtered by entitlements in production)
@@ -285,6 +470,15 @@ export function getFormations(entitlements = null) {
     // MVP: return all formations
     return formations;
   }
-  return formations.filter((f) => entitlements.includes(f.id));
+  
+  // Mapper les entitlements vers les IDs du mock
+  const mappedEntitlements = entitlements.map(mapFormationId);
+  console.log('[getFormations] Entitlements originaux:', entitlements);
+  console.log('[getFormations] Entitlements mappés:', mappedEntitlements);
+  
+  const filtered = formations.filter((f) => mappedEntitlements.includes(f.id));
+  console.log('[getFormations] Formations filtrées:', filtered.map(f => f.id));
+  
+  return filtered;
 }
 

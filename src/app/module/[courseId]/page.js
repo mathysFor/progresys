@@ -1,14 +1,18 @@
 "use client";
 
 import { useRouter, useParams } from "next/navigation";
-import { useEffect, useState, useCallback } from "react";
-import { isLoggedIn, getCourseProgress, updateCourseProgress, setLastCourse } from "../../../lib/progress/store.js";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { isLoggedIn, getCourseProgress, updateCourseProgress, setLastCourse, getProgress } from "../../../lib/progress/store-firebase.js";
 import { getCourseById, getNextPrevCourse } from "../../../lib/selectors/courses.js";
-import { getTCProgress, isTCCourse } from "../../../lib/selectors/formations.js";
+import { getTCProgress, isTCCourse, getFormationProgress } from "../../../lib/selectors/formations.js";
 import { getFormationById } from "../../../lib/mock/formations.js";
+import { formatTime } from "../../../lib/utils/time.js";
+import { signOut } from "../../../lib/firebase/auth.js";
+import { useInactivityDetector } from "../../../lib/hooks/useInactivityDetector.js";
 import VideoPlayer from "../../../components/VideoPlayer.js";
 import Button from "../../../components/Button.js";
 import TCCounter from "../../../components/TCCounter.js";
+import InactivityWarning from "../../../components/InactivityWarning.js";
 
 export default function ModulePage() {
   const router = useRouter();
@@ -21,46 +25,227 @@ export default function ModulePage() {
   const [tcProgress, setTcProgress] = useState(null);
   const [navigation, setNavigation] = useState({ next: null, prev: null });
   const [lastSaved, setLastSaved] = useState(null);
+  const [userProgress, setUserProgress] = useState({});
+  const [formationTimeSpent, setFormationTimeSpent] = useState(0);
+  const timerIntervalRef = useRef(null);
+  const saveIntervalRef = useRef(null);
+  const startTimeRef = useRef(null);
+  const pausedTimeRef = useRef(null);
+  const wasPausedRef = useRef(false);
+
+  // Inactivity detection: 15 minutes = 900000ms, warning at 14min30 = 30000ms before
+  const { isActive, timeUntilLogout, resetTimer } = useInactivityDetector(900000, 30000);
+
+  // Handle logout when timeUntilLogout reaches 0
+  useEffect(() => {
+    if (timeUntilLogout === 0) {
+      const handleLogout = async () => {
+        // Save current progress before logout
+        if (course && startTimeRef.current) {
+          const now = wasPausedRef.current && pausedTimeRef.current 
+            ? pausedTimeRef.current 
+            : Date.now();
+          const elapsedSeconds = Math.floor((now - startTimeRef.current) / 1000);
+          const duration = course.durationSeconds || 3600;
+          const percentComplete = Math.min(100, (elapsedSeconds / duration) * 100);
+
+          const finalProgress = {
+            timeSpentSeconds: elapsedSeconds,
+            percentComplete: percentComplete,
+            lastVideoPositionSeconds: progress?.lastVideoPositionSeconds || elapsedSeconds,
+          };
+
+          await updateCourseProgress(courseId, finalProgress);
+        }
+
+        // Sign out and redirect
+        await signOut();
+        router.push("/login");
+      };
+
+      handleLogout();
+    }
+  }, [timeUntilLogout, course, courseId, progress, router]);
 
   useEffect(() => {
-    if (!isLoggedIn()) {
-      router.push("/login");
-      return;
-    }
+    const loadData = async () => {
+      if (!isLoggedIn()) {
+        router.push("/login");
+        return;
+      }
 
-    const courseData = getCourseById(courseId);
-    if (!courseData) {
-      router.push("/dashboard");
-      return;
-    }
+      const courseData = getCourseById(courseId);
+      if (!courseData) {
+        router.push("/dashboard");
+        return;
+      }
 
-    setCourse(courseData);
-    setFormation(getFormationById(courseData.formationId));
+      setCourse(courseData);
+      setFormation(getFormationById(courseData.formationId));
 
-    // Load progress
-    const courseProgress = getCourseProgress(courseId);
-    setProgress(courseProgress || {
-      timeSpentSeconds: 0,
-      percentComplete: 0,
-      lastVideoPositionSeconds: 0,
-    });
+      // Load all progress
+      const progressResult = await getProgress();
+      const allProgress = progressResult.data || {};
+      setUserProgress(allProgress);
 
-    // Load navigation
-    const nav = getNextPrevCourse(courseId, courseData.formationId);
-    setNavigation(nav);
+      // Load course progress
+      const courseProgressResult = await getCourseProgress(courseId);
+      setProgress(courseProgressResult.data || {
+        timeSpentSeconds: 0,
+        percentComplete: 0,
+        lastVideoPositionSeconds: 0,
+      });
 
-    // Load TC progress if this course is in TC
-    if (isTCCourse(courseData, courseData.formationId)) {
-      const tc = getTCProgress(courseData.formationId);
-      setTcProgress(tc);
-    }
+      // Load navigation
+      const nav = getNextPrevCourse(courseId, courseData.formationId);
+      setNavigation(nav);
 
-    // Set last course accessed
-    setLastCourse(courseData.formationId, courseId);
+      // Load TC progress if this course is in TC
+      if (isTCCourse(courseData, courseData.formationId)) {
+        const tc = getTCProgress(courseData.formationId, allProgress);
+        setTcProgress(tc);
+      }
+
+      // Calculate formation time spent
+      const formationProgress = getFormationProgress(courseData.formationId, allProgress);
+      setFormationTimeSpent(formationProgress.timeSpentSeconds || 0);
+
+      // Set last course accessed
+      await setLastCourse(courseData.formationId, courseId);
+    };
+
+    loadData();
   }, [courseId, router]);
 
-  // Auto-save progress
-  const handleProgressUpdate = useCallback((timeSpent) => {
+  // Auto-increment time counter while on page (only when active)
+  useEffect(() => {
+    if (!course || !progress) return;
+
+    // Clean up any existing intervals
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+    if (saveIntervalRef.current) {
+      clearInterval(saveIntervalRef.current);
+      saveIntervalRef.current = null;
+    }
+
+    // Initialize start time on first load
+    if (!startTimeRef.current) {
+      const initialTimeSpent = progress.timeSpentSeconds || 0;
+      startTimeRef.current = Date.now() - (initialTimeSpent * 1000);
+    }
+
+    // If user becomes inactive, pause the timer
+    if (!isActive) {
+      // Save the current time when pausing
+      if (!wasPausedRef.current) {
+        pausedTimeRef.current = Date.now();
+        wasPausedRef.current = true;
+      }
+      return; // Don't start intervals when inactive
+    }
+
+    // User is active - resume or start the timer
+    if (wasPausedRef.current && pausedTimeRef.current) {
+      // Adjust start time to account for the pause duration
+      const pauseDuration = pausedTimeRef.current - (startTimeRef.current + ((progress.timeSpentSeconds || 0) * 1000));
+      startTimeRef.current = startTimeRef.current + pauseDuration;
+      pausedTimeRef.current = null;
+      wasPausedRef.current = false;
+    }
+
+    // Start timer that increments every second
+    timerIntervalRef.current = setInterval(() => {
+      if (!isActive) return; // Double check, should not happen but safety
+
+      const now = Date.now();
+      const elapsedSeconds = Math.floor((now - startTimeRef.current) / 1000);
+
+      // Update course progress
+      const duration = course.durationSeconds || 3600;
+      const percentComplete = Math.min(100, (elapsedSeconds / duration) * 100);
+
+      const newProgress = {
+        timeSpentSeconds: elapsedSeconds,
+        percentComplete: percentComplete,
+        lastVideoPositionSeconds: progress.lastVideoPositionSeconds || elapsedSeconds,
+      };
+
+      setProgress(newProgress);
+
+      // Update userProgress and recalculate formation time
+      setUserProgress((prev) => {
+        const updated = {
+          ...prev,
+          [courseId]: newProgress,
+        };
+
+        // Calculate formation time immediately
+        const formationProgress = getFormationProgress(course.formationId, updated);
+        setFormationTimeSpent(formationProgress.timeSpentSeconds || 0);
+
+        // Update TC progress if applicable
+        if (isTCCourse(course, course.formationId)) {
+          const tc = getTCProgress(course.formationId, updated);
+          setTcProgress(tc);
+        }
+
+        return updated;
+      });
+    }, 1000); // Update every second
+
+    // Save to Firestore every 30 seconds (only when active)
+    saveIntervalRef.current = setInterval(async () => {
+      if (course && startTimeRef.current && isActive) {
+        const now = Date.now();
+        const elapsedSeconds = Math.floor((now - startTimeRef.current) / 1000);
+        const duration = course.durationSeconds || 3600;
+        const percentComplete = Math.min(100, (elapsedSeconds / duration) * 100);
+
+        const progressToSave = {
+          timeSpentSeconds: elapsedSeconds,
+          percentComplete: percentComplete,
+          lastVideoPositionSeconds: progress.lastVideoPositionSeconds || elapsedSeconds,
+        };
+
+        await updateCourseProgress(courseId, progressToSave);
+        setLastSaved(new Date());
+      }
+    }, 30000); // Save every 30 seconds
+
+    // Cleanup
+    return () => {
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+        timerIntervalRef.current = null;
+      }
+      if (saveIntervalRef.current) {
+        clearInterval(saveIntervalRef.current);
+        saveIntervalRef.current = null;
+      }
+      
+      // Final save on unmount (only if active)
+      if (course && startTimeRef.current && isActive) {
+        const now = Date.now();
+        const elapsedSeconds = Math.floor((now - startTimeRef.current) / 1000);
+        const duration = course.durationSeconds || 3600;
+        const percentComplete = Math.min(100, (elapsedSeconds / duration) * 100);
+
+        const finalProgress = {
+          timeSpentSeconds: elapsedSeconds,
+          percentComplete: percentComplete,
+          lastVideoPositionSeconds: progress?.lastVideoPositionSeconds || elapsedSeconds,
+        };
+
+        updateCourseProgress(courseId, finalProgress);
+      }
+    };
+  }, [course, courseId, progress?.lastVideoPositionSeconds, isActive]);
+
+  // Auto-save progress (for VideoPlayer if needed)
+  const handleProgressUpdate = useCallback(async (timeSpent) => {
     if (!course) return;
 
     const duration = course.durationSeconds || 3600;
@@ -72,19 +257,37 @@ export default function ModulePage() {
       lastVideoPositionSeconds: timeSpent,
     };
 
+    // Update the start time reference to sync with video position
+    if (startTimeRef.current) {
+      startTimeRef.current = Date.now() - (timeSpent * 1000);
+    }
+
     setProgress(newProgress);
-    updateCourseProgress(courseId, newProgress);
+    
+    // Update userProgress with new course progress to calculate formation time
+    setUserProgress((prev) => {
+      const updated = {
+        ...prev,
+        [courseId]: newProgress,
+      };
+      
+      // Calculate formation time immediately with updated progress
+      const formationProgress = getFormationProgress(course.formationId, updated);
+      setFormationTimeSpent(formationProgress.timeSpentSeconds || 0);
+      
+      // Update TC progress if applicable
+      if (isTCCourse(course, course.formationId)) {
+        const tc = getTCProgress(course.formationId, updated);
+        setTcProgress(tc);
+      }
+      
+      return updated;
+    });
+    
+    await updateCourseProgress(courseId, newProgress);
     setLastSaved(new Date());
   }, [course, courseId]);
 
-  // Save video position when component unmounts or changes
-  useEffect(() => {
-    return () => {
-      if (course && progress) {
-        updateCourseProgress(courseId, progress);
-      }
-    };
-  }, [course, courseId, progress]);
 
   if (!course || !formation) {
     return (
@@ -133,6 +336,14 @@ export default function ModulePage() {
 
   return (
     <div className="min-h-screen bg-[#F9FAFB]">
+      {/* Inactivity Warning Modal */}
+      {timeUntilLogout !== null && timeUntilLogout > 0 && (
+        <InactivityWarning 
+          timeUntilLogout={timeUntilLogout} 
+          onStayActive={resetTimer}
+        />
+      )}
+
       {/* Header */}
       <header className="gradient-primary text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -140,7 +351,7 @@ export default function ModulePage() {
             <Button
               onClick={() => router.push("/dashboard")}
               variant="secondary"
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white border-0 mb-4"
+              className="bg-white bg-opacity-20 cursor-pointer hover:bg-opacity-30 text-white border-0 mb-4"
             >
               ← Retour au dashboard
             </Button>
@@ -246,6 +457,26 @@ export default function ModulePage() {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Formation Time Counter */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 flex-1">
+                  Temps de formation
+                </h3>
+              </div>
+              <div className="text-2xl font-bold text-blue-600">
+                {formatTime(formationTimeSpent)}
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Temps total passé sur cette formation
+              </p>
+            </div>
+
             {/* TC Counter */}
             {tcProgress && (
               <TCCounter tcProgress={tcProgress} />

@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================
+    // RÈGLES DE SÉCURITÉ FIRESTORE
+    // ============================================
+    // Ces règles garantissent que chaque utilisateur
+    // ne peut accéder qu'à ses propres données.
+    // ============================================
+    
+    // Collection users - Données utilisateur
+    match /users/{userId} {
+      // Lecture : uniquement le propriétaire
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Création : uniquement lors de l'inscription (userId == auth.uid)
+      allow create: if request.auth != null && request.auth.uid == userId;
+      
+      // Modification : uniquement le propriétaire
+      allow update: if request.auth != null && request.auth.uid == userId;
+      
+      // Suppression : uniquement le propriétaire
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Collection progress - Progression des formations
+    match /progress/{userId} {
+      // Lecture : uniquement le propriétaire
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Création : uniquement le propriétaire
+      allow create: if request.auth != null && request.auth.uid == userId;
+      
+      // Modification : uniquement le propriétaire
+      allow update: if request.auth != null && request.auth.uid == userId;
+      
+      // Suppression : uniquement le propriétaire
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Par défaut, tout est refusé pour la sécurité
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// ============================================
+// INSTRUCTIONS DE DÉPLOIEMENT
+// ============================================
+// 1. Copiez le contenu de ce fichier
+// 2. Allez dans Firebase Console > Firestore Database > Rules
+// 3. Collez les règles dans l'éditeur
+// 4. Cliquez sur "Publier"
+// 
+// OU utilisez Firebase CLI :
+// firebase deploy --only firestore:rules
+// ============================================
+

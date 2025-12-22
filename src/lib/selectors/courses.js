@@ -69,7 +69,7 @@ export function getCourseById(courseId) {
  * @param {string} formationId - Formation ID
  * @returns {Array} Array of course objects with parent context
  */
-function getAllCoursesFromFormation(formationId) {
+export function getAllCoursesFromFormation(formationId) {
   const formation = getFormationById(formationId);
   if (!formation) return [];
   
