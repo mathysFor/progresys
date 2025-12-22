@@ -4,7 +4,7 @@
 export const dynamic = 'force-dynamic';
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { getRegistrationData, saveRegistrationData } from "../../../lib/progress/store.js";
@@ -17,7 +17,7 @@ import PaymentForm from "../../../components/PaymentForm.js";
 // Initialiser Stripe avec votre clé publique
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [registrationData, setRegistrationData] = useState(null);
@@ -304,6 +304,21 @@ export default function CheckoutPage() {
         </Elements>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 via-white to-teal-50/30">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-teal-200 border-t-[#00BCD4] rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-slate-600 font-medium">Chargement du paiement...</p>
+        </div>
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
   );
 }
 
