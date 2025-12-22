@@ -1,12 +1,15 @@
 "use client";
 
+// Force dynamic rendering to prevent static generation
+export const dynamic = 'force-dynamic';
+
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { isLoggedIn } from "../../lib/progress/store.js";
 import { saveRegistrationData } from "../../lib/progress/store.js";
 import { getAllFormations, getFormationById } from "../../lib/config/formations.js";
 
-export default function InscriptionPage() {
+function InscriptionContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -384,6 +387,21 @@ export default function InscriptionPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function InscriptionPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 via-white to-teal-50/30">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-teal-200 border-t-[#00BCD4] rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-slate-600 font-medium">Chargement...</p>
+        </div>
+      </div>
+    }>
+      <InscriptionContent />
+    </Suspense>
   );
 }
 

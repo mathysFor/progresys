@@ -1,13 +1,16 @@
 "use client";
 
+// Force dynamic rendering to prevent static generation
+export const dynamic = 'force-dynamic';
+
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { isLoggedIn } from "../../../lib/progress/store.js";
 import { getRegistrationData, saveRegistrationData } from "../../../lib/progress/store.js";
 import { getCurrentUser } from "../../../lib/firebase/auth.js";
 import { getUserData } from "../../../lib/firebase/firestore.js";
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -546,6 +549,21 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 via-white to-teal-50/30">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-teal-200 border-t-[#00BCD4] rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-slate-600 font-medium">Chargement...</p>
+        </div>
+      </div>
+    }>
+      <RegisterContent />
+    </Suspense>
   );
 }
 
