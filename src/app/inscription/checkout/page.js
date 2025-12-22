@@ -1,5 +1,8 @@
 "use client";
 
+// Force dynamic rendering to prevent static generation
+export const dynamic = 'force-dynamic';
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
