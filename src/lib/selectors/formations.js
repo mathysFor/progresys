@@ -160,3 +160,99 @@ export function isTCCourse(course, formationId) {
   return module ? isTCModule(module) : false;
 }
 
+/**
+ * Get all courses from a specific module
+ * @param {string} formationId - Formation ID
+ * @param {string} moduleId - Module ID
+ * @returns {Array} Array of course objects
+ */
+function getModuleCourses(formationId, moduleId) {
+  const formation = getFormationById(formationId);
+  if (!formation) return [];
+  
+  const module = formation.modules.find((m) => m.id === moduleId);
+  if (!module) return [];
+  
+  const courses = [];
+  for (const chapter of module.chapters || []) {
+    const chapterCourses = getCoursesForChapter(chapter);
+    for (const course of chapterCourses) {
+      courses.push({
+        ...course,
+        formationId: formation.id,
+        moduleId: module.id,
+        chapterId: chapter.id,
+      });
+    }
+  }
+  
+  return courses;
+}
+
+/**
+ * Calculate progress for a specific module
+ * @param {string} formationId - Formation ID
+ * @param {string} moduleId - Module ID
+ * @param {Object} userProgress - Progress data from Firestore (progressByCourseId object)
+ * @returns {Object} { percentComplete, timeSpentSeconds, totalDurationSeconds }
+ */
+export function getModuleProgress(formationId, moduleId, userProgress = {}) {
+  const progress = userProgress || {};
+  const moduleCourses = getModuleCourses(formationId, moduleId);
+  
+  if (moduleCourses.length === 0) {
+    return {
+      percentComplete: 0,
+      timeSpentSeconds: 0,
+      totalDurationSeconds: 0,
+    };
+  }
+  
+  let totalDuration = 0;
+  let totalTimeSpent = 0;
+  
+  for (const course of moduleCourses) {
+    const courseProgress = progress[course.id] || {};
+    const duration = course.durationSeconds || 0;
+    const timeSpent = courseProgress.timeSpentSeconds || 0;
+    
+    totalDuration += duration;
+    totalTimeSpent += timeSpent;
+  }
+  
+  const percentComplete = totalDuration > 0
+    ? Math.min(100, (totalTimeSpent / totalDuration) * 100)
+    : 0;
+  
+  return {
+    percentComplete: Math.round(percentComplete * 10) / 10,
+    timeSpentSeconds: totalTimeSpent,
+    totalDurationSeconds: totalDuration,
+  };
+}
+
+/**
+ * Check if a module's quiz is unlocked based on time spent
+ * @param {string} formationId - Formation ID
+ * @param {string} moduleId - Module ID
+ * @param {Object} userProgress - Progress data from Firestore (progressByCourseId object)
+ * @returns {boolean} True if quiz is unlocked
+ */
+export function isModuleQuizUnlocked(formationId, moduleId, userProgress = {}) {
+  const formation = getFormationById(formationId);
+  if (!formation) return false;
+  
+  const module = formation.modules.find((m) => m.id === moduleId);
+  if (!module) return false;
+  
+  const moduleProgress = getModuleProgress(formationId, moduleId, userProgress);
+  
+  // If module has requiredHoursSeconds, use it
+  // Otherwise, default to 80% of total duration
+  const requiredTime = module.requiredHoursSeconds !== undefined
+    ? module.requiredHoursSeconds
+    : Math.floor(moduleProgress.totalDurationSeconds * 0.8);
+  
+  return moduleProgress.timeSpentSeconds >= requiredTime;
+}
+

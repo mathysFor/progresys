@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { getRegistrationData } from "../../../lib/progress/store.js";
-import { isLoggedIn } from "../../../lib/progress/store.js";
+
 import { getFormationById } from "../../../lib/config/formations.js";
 import { getCurrentUser } from "../../../lib/firebase/auth.js";
 import { addFormationsToUser } from "../../../lib/firebase/firestore.js";

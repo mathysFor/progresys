@@ -10,6 +10,7 @@ export const formations = [
       {
         id: "module-1",
         name: "Module 1: Fondamentaux",
+        requiredHoursSeconds: 7440, // 80% of module total duration (~2h04)
         chapters: [
           {
             id: "chapter-1-1",
@@ -116,6 +117,7 @@ export const formations = [
       {
         id: "module-tc",
         name: "Tronc Commun",
+        requiredHoursSeconds: 2640, // 80% of module total duration (~44min)
         chapters: [
           {
             id: "chapter-tc-1",
@@ -173,6 +175,7 @@ export const formations = [
       {
         id: "module-ias-1",
         name: "Module 1: Fondamentaux",
+        requiredHoursSeconds: 3360, // 80% of module total duration (~56min)
         chapters: [
           {
             id: "chapter-ias-1-1",
@@ -229,6 +232,7 @@ export const formations = [
       {
         id: "module-ias-tc",
         name: "Tronc Commun",
+        requiredHoursSeconds: 1200, // 80% of module total duration (~20min)
         chapters: [
           {
             id: "chapter-ias-tc-1",
@@ -267,6 +271,7 @@ export const formations = [
       {
         id: "module-dda-1",
         name: "Module 1: Bases",
+        requiredHoursSeconds: 3600, // 80% of module total duration (~1h)
         chapters: [
           {
             id: "chapter-dda-1-1",
@@ -342,6 +347,7 @@ export const formations = [
       {
         id: "module-dda-tc",
         name: "Tronc Commun",
+        requiredHoursSeconds: 1680, // 80% of module total duration (~28min)
         chapters: [
           {
             id: "chapter-dda-tc-1",
@@ -374,6 +380,7 @@ export const formations = [
       {
         id: "module-lab-1",
         name: "Module 1: Bases",
+        requiredHoursSeconds: 960, // 80% of module total duration (~16min)
         chapters: [
           {
             id: "chapter-lab-1-1",
@@ -412,6 +419,7 @@ export const formations = [
       {
         id: "module-dci-1",
         name: "Module 1: Bases",
+        requiredHoursSeconds: 960, // 80% of module total duration (~16min)
         chapters: [
           {
             id: "chapter-dci-1-1",

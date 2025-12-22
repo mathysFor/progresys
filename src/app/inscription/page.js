@@ -5,7 +5,6 @@ export const dynamic = 'force-dynamic';
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
-import { isLoggedIn } from "../../lib/progress/store.js";
 import { saveRegistrationData } from "../../lib/progress/store.js";
 import { getAllFormations, getFormationById } from "../../lib/config/formations.js";
 
@@ -25,11 +24,7 @@ function InscriptionContent() {
   const allFormations = [...packs, ...individual];
 
   useEffect(() => {
-    // If already logged in, redirect to dashboard
-    if (isLoggedIn()) {
-      router.push("/dashboard");
-      return;
-    }
+  
 
     // Lire le paramètre formation depuis l'URL
     const formationParam = searchParams.get("formation");

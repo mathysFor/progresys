@@ -19,10 +19,7 @@ export default function CheckEmailPage() {
 
   useEffect(() => {
     // If already logged in, redirect to dashboard
-    if (isLoggedIn()) {
-      router.push("/dashboard");
-      return;
-    }
+   
 
     // Récupérer les formations sélectionnées depuis l'étape 1
     const data = getRegistrationData();
