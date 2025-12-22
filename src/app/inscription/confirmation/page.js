@@ -33,7 +33,9 @@ export default function ConfirmationPage() {
 
     // Vérifier l'état d'authentification avec Firebase Auth directement
     const user = getCurrentUser();
-    const authenticated = user !== null;
+    // Vérifier si l'utilisateur est authentifié ET si son email correspond à l'email de l'inscription
+    const authenticated = user !== null && user.email && data.email && 
+                         user.email.toLowerCase().trim() === data.email.toLowerCase().trim();
     setIsAuthenticated(authenticated);
 
     // Si l'utilisateur est authentifié, ajouter les formations à son profil
@@ -94,9 +96,15 @@ export default function ConfirmationPage() {
       hasRedirected.current = true;
       // Vérifier l'état d'authentification directement avec Firebase Auth
       const user = getCurrentUser();
-      // Si l'utilisateur est déjà authentifié, rediriger vers le dashboard
+      const data = getRegistrationData();
+      
+      // Vérifier si l'utilisateur est authentifié ET si son email correspond à l'email de l'inscription
+      const isUserAuthenticated = user !== null && user.email && data && data.email && 
+                                  user.email.toLowerCase().trim() === data.email.toLowerCase().trim();
+      
+      // Si l'utilisateur est déjà authentifié avec le bon email, rediriger vers le dashboard
       // Sinon, rediriger vers la création du mot de passe (nouveau compte)
-      if (user !== null) {
+      if (isUserAuthenticated) {
         router.push("/dashboard");
       } else {
         router.push("/inscription/create-password");
@@ -124,9 +132,15 @@ export default function ConfirmationPage() {
   const handleContinue = () => {
     // Vérifier l'état d'authentification directement avec Firebase Auth
     const user = getCurrentUser();
-    // Si l'utilisateur est déjà authentifié, rediriger vers le dashboard
+    const data = getRegistrationData();
+    
+    // Vérifier si l'utilisateur est authentifié ET si son email correspond à l'email de l'inscription
+    const isUserAuthenticated = user !== null && user.email && data && data.email && 
+                                user.email.toLowerCase().trim() === data.email.toLowerCase().trim();
+    
+    // Si l'utilisateur est déjà authentifié avec le bon email, rediriger vers le dashboard
     // Sinon, rediriger vers la création du mot de passe (nouveau compte)
-    if (user !== null) {
+    if (isUserAuthenticated) {
       router.push("/dashboard");
     } else {
       router.push("/inscription/create-password");
