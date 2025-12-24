@@ -114,6 +114,8 @@ export default function CreatePasswordPage() {
         paidByCompany: registrationData.paidByCompany || false,
         paymentIntentId: registrationData.paymentIntentId || null,
         paymentStatus: registrationData.paymentStatus || null,
+        companyId: registrationData.companyId || null,
+        companyCodeId: registrationData.companyCodeId || null,
       };
 
       const { error: firestoreError } = await saveUserData(user.uid, userData);
@@ -122,6 +124,30 @@ export default function CreatePasswordPage() {
         setErrors({ general: firestoreError });
         setIsLoading(false);
         return;
+      }
+
+      // Si un code d'entreprise a été utilisé, le marquer comme utilisé
+      if (registrationData.companyCodeId && registrationData.formations) {
+        try {
+          const response = await fetch('/api/mark-code-used', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              codeId: registrationData.companyCodeId,
+              userId: user.uid,
+              formationIds: individualFormations,
+            }),
+          });
+          
+          const result = await response.json();
+          if (result.error) {
+            console.error('Erreur lors de la validation du code:', result.error);
+            // Ne pas bloquer l'inscription si la validation du code échoue
+          }
+        } catch (error) {
+          console.error('Erreur lors de la validation du code:', error);
+          // Ne pas bloquer l'inscription si la validation du code échoue
+        }
       }
 
       // User is automatically signed in after creation

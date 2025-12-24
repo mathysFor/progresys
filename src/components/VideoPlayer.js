@@ -93,7 +93,7 @@ export default function VideoPlayer({
         {!isPlaying ? (
           <button
             onClick={togglePlay}
-            className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70 transition-colors z-10"
+            className="cursor-pointer absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70 transition-colors z-10"
             aria-label="Play video"
           >
             <div className="w-20 h-20 rounded-full bg-white bg-opacity-90 flex items-center justify-center hover:bg-opacity-100 transition-opacity">
@@ -140,7 +140,7 @@ export default function VideoPlayer({
           </span>
           <button
             onClick={togglePlay}
-            className="px-4 py-2 bg-[#3B82F6] text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+            className="cursor-pointer px-4 py-2 bg-[#3B82F6] text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
           >
             {isPlaying ? "Pause" : "Lecture"}
           </button>

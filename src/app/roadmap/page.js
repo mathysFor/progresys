@@ -131,11 +131,7 @@ function RoadmapContent() {
               <div className="space-y-2 text-sm">
                 <div>
                   <span className="font-medium text-gray-700">Type:</span>{" "}
-                  <span className="text-gray-600">
-                    {formation.type === "longue"
-                      ? "Formation Longue"
-                      : "Formation Courte"}
-                  </span>
+                
                 </div>
                 <div>
                   <span className="font-medium text-gray-700">Modules:</span>{" "}

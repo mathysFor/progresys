@@ -4,7 +4,7 @@
 export const formations = [
   {
     id: "iobsp",
-    name: "IOBSP - Formation Longue",
+    name: "IOBSP",
     type: "longue",
     modules: [
       {
@@ -169,7 +169,7 @@ export const formations = [
   },
   {
     id: "ias",
-    name: "IAS - Formation Longue",
+    name: "IAS",
     type: "longue",
     modules: [
       {
@@ -265,7 +265,7 @@ export const formations = [
   },
   {
     id: "dda",
-    name: "DDA - Formation Courte",
+    name: "DDA",
     type: "courte",
     modules: [
       {
@@ -374,7 +374,7 @@ export const formations = [
   },
   {
     id: "lab",
-    name: "LAB - Formation Courte",
+    name: "LAB",
     type: "courte",
     modules: [
       {
@@ -413,7 +413,7 @@ export const formations = [
   },
   {
     id: "dci",
-    name: "DCI - Formation Courte",
+    name: "DCI",
     type: "courte",
     modules: [
       {

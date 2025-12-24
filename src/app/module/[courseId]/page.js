@@ -432,7 +432,7 @@ export default function ModulePage() {
                             href={content.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-[#3B82F6] hover:underline"
+                            className="cursor-pointer text-sm text-[#3B82F6] hover:underline"
                           >
                             Télécharger
                           </a>
@@ -442,7 +442,7 @@ export default function ModulePage() {
                             href={content.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-[#3B82F6] hover:underline"
+                            className="cursor-pointer text-sm text-[#3B82F6] hover:underline"
                           >
                             Ouvrir
                           </a>

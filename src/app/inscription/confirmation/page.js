@@ -222,6 +222,11 @@ export default function ConfirmationPage() {
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-teal-100 text-teal-700">
                       Formation payée par une société
                     </span>
+                    {registrationData.companyName && (
+                      <p className="text-sm text-slate-600 mt-2">
+                        Entreprise : <span className="font-semibold">{registrationData.companyName}</span>
+                      </p>
+                    )}
                   </div>
                 )}
               </div>

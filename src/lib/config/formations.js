@@ -1,6 +1,10 @@
 // Configuration centralisée des formations
 // Utilisé dans la landing page, l'API de paiement, et le formulaire d'inscription
+// Supporte le chargement depuis Firestore avec fallback sur les données locales
 
+import { getAllFormationsFromFirestore, getFormationByIdFromFirestore } from "../firebase/admin-firestore.js";
+
+// Formations locales (fallback et données de base pour l'inscription/paiement)
 export const formations = [
   {
     id: "pack-dci-dda-lab",
@@ -74,8 +78,61 @@ export const formations = [
   },
 ];
 
+// Cache pour les formations chargées depuis Firestore
+let cachedFirestoreFormations = null;
+let cacheTimestamp = null;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 /**
- * Obtenir une formation par son ID
+ * Charger les formations depuis Firestore
+ * @param {boolean} forceRefresh - Forcer le rechargement depuis Firestore
+ * @returns {Promise<Array>} Liste des formations
+ */
+export async function loadFormationsFromFirestore(forceRefresh = false) {
+  // Vérifier le cache
+  if (!forceRefresh && cachedFirestoreFormations && cacheTimestamp) {
+    const now = Date.now();
+    if (now - cacheTimestamp < CACHE_DURATION) {
+      return cachedFirestoreFormations;
+    }
+  }
+
+  try {
+    const result = await getAllFormationsFromFirestore();
+    if (!result.error && result.data && result.data.length > 0) {
+      cachedFirestoreFormations = result.data;
+      cacheTimestamp = Date.now();
+      return result.data;
+    }
+  } catch (error) {
+    console.warn("Erreur lors du chargement des formations depuis Firestore, utilisation du fallback local:", error);
+  }
+
+  // Fallback sur les formations locales
+  return formations;
+}
+
+/**
+ * Obtenir une formation par son ID (async - cherche d'abord dans Firestore)
+ * @param {string} formationId - ID de la formation
+ * @returns {Promise<Object|null>} Formation ou null si non trouvée
+ */
+export async function getFormationByIdAsync(formationId) {
+  try {
+    const result = await getFormationByIdFromFirestore(formationId);
+    if (!result.error && result.data) {
+      return result.data;
+    }
+  } catch (error) {
+    console.warn("Erreur lors du chargement de la formation depuis Firestore:", error);
+  }
+
+  // Fallback sur les formations locales
+  return formations.find(f => f.id === formationId) || null;
+}
+
+/**
+ * Obtenir une formation par son ID (synchrone - données locales uniquement)
  * @param {string} formationId - ID de la formation
  * @returns {Object|null} Formation ou null si non trouvée
  */
@@ -164,3 +221,10 @@ export function expandFormationsToIndividual(formationIds) {
   return Array.from(individualFormations);
 }
 
+/**
+ * Vider le cache des formations
+ */
+export function clearFormationsCache() {
+  cachedFirestoreFormations = null;
+  cacheTimestamp = null;
+}

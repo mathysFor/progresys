@@ -77,14 +77,14 @@ export default function PaymentForm({
             type="button"
             onClick={onCancel}
             disabled={isProcessing}
-            className="flex-1 px-6 py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 hover:border-slate-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+            className="cursor-pointer flex-1 px-6 py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 hover:border-slate-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
           >
             Retour
           </button>
           <button
             type="submit"
             disabled={!stripe || !elements || isProcessing}
-            className="flex-1 px-6 py-3 rounded-xl bg-linear-to-r from-teal-500 to-cyan-500 text-white font-bold text-lg shadow-xl shadow-teal-500/30 hover:shadow-2xl hover:shadow-teal-500/40 hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none transition-all duration-300"
+            className="cursor-pointer flex-1 px-6 py-3 rounded-xl bg-linear-to-r from-teal-500 to-cyan-500 text-white font-bold text-lg shadow-xl shadow-teal-500/30 hover:shadow-2xl hover:shadow-teal-500/40 hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none transition-all duration-300"
           >
             {isProcessing ? (
               <span className="flex items-center justify-center gap-2">

@@ -77,6 +77,21 @@ export async function signIn(email, password) {
  */
 export async function signOut() {
   try {
+    // Log logout before signing out
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      try {
+        const { logLogout, getActiveSession } = await import("./session-tracking.js");
+        const activeSessionResult = await getActiveSession(currentUser.uid);
+        if (activeSessionResult.data) {
+          await logLogout(currentUser.uid, activeSessionResult.data.id, "explicit");
+        }
+      } catch (sessionError) {
+        // Don't block logout if session tracking fails
+        console.error("Error logging session logout:", sessionError);
+      }
+    }
+
     await firebaseSignOut(auth);
     return { error: null };
   } catch (error) {

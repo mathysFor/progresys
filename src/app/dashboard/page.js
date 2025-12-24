@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getProgress, getUserSession, getEntitlements } from "../../lib/progress/store-firebase.js";
 import { signOut } from "../../lib/firebase/auth.js";
 import { useAuthState } from "../../lib/hooks/useAuthState.js";
+import { useSessionTracking } from "../../lib/hooks/useSessionTracking.js";
 import { getFormations } from "../../lib/mock/formations.js";
 import { getFormationProgress, getTCProgress } from "../../lib/selectors/formations.js";
 import { getResumeCourse, hasPdfContent, getPdfContent } from "../../lib/selectors/courses.js";
@@ -16,6 +17,7 @@ import ModuleRoadmap from "../../components/ModuleRoadmap.js";
 export default function DashboardPage() {
   const router = useRouter();
   const { user: authUser, loading: authLoading } = useAuthState();
+  useSessionTracking(); // Track session login/logout
   const [formations, setFormations] = useState([]);
   const [userProgress, setUserProgress] = useState({});
   const [user, setUser] = useState(null);

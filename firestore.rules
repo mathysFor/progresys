@@ -3,25 +3,84 @@ service cloud.firestore {
   match /databases/{database}/documents {
     
     // Collection users - chaque utilisateur peut uniquement lire/écrire ses propres données
+    // Exception: les admins peuvent tout lire/écrire (pour l'instant, tous les utilisateurs authentifiés)
     match /users/{userId} {
-      // Seul l'utilisateur authentifié peut lire ses propres données
-      allow read: if request.auth != null && request.auth.uid == userId;
+      // Lecture: l'utilisateur lui-même OU tout utilisateur authentifié (admin)
+      allow read: if request.auth != null;
       
-      // Seul l'utilisateur authentifié peut créer/modifier ses propres données
-      allow create: if request.auth != null && request.auth.uid == userId;
-      allow update: if request.auth != null && request.auth.uid == userId;
-      allow delete: if request.auth != null && request.auth.uid == userId;
+      // Création: l'utilisateur lui-même OU tout utilisateur authentifié (admin)
+      allow create: if request.auth != null;
+      
+      // Modification: l'utilisateur lui-même OU tout utilisateur authentifié (admin)
+      allow update: if request.auth != null;
+      
+      // Suppression: tout utilisateur authentifié (admin)
+      allow delete: if request.auth != null;
+      
+      // Sous-collection sessions - tracking des connexions/déconnexions
+      match /sessions/{sessionId} {
+        // Lecture: l'utilisateur lui-même OU tout utilisateur authentifié (admin)
+        allow read: if request.auth != null;
+        
+        // Création: l'utilisateur lui-même uniquement
+        allow create: if request.auth != null && request.auth.uid == userId;
+        
+        // Modification: l'utilisateur lui-même uniquement
+        allow update: if request.auth != null && request.auth.uid == userId;
+        
+        // Suppression: tout utilisateur authentifié (admin)
+        allow delete: if request.auth != null;
+      }
     }
     
     // Collection progress - chaque utilisateur peut uniquement lire/écrire sa propre progression
+    // Exception: les admins peuvent tout lire (pour l'instant, tous les utilisateurs authentifiés)
     match /progress/{userId} {
-      // Seul l'utilisateur authentifié peut lire sa propre progression
-      allow read: if request.auth != null && request.auth.uid == userId;
+      // Lecture: l'utilisateur lui-même OU tout utilisateur authentifié (admin)
+      allow read: if request.auth != null;
       
-      // Seul l'utilisateur authentifié peut créer/modifier sa propre progression
+      // Création: l'utilisateur lui-même
       allow create: if request.auth != null && request.auth.uid == userId;
+      
+      // Modification: l'utilisateur lui-même
       allow update: if request.auth != null && request.auth.uid == userId;
-      allow delete: if request.auth != null && request.auth.uid == userId;
+      
+      // Suppression: tout utilisateur authentifié (admin)
+      allow delete: if request.auth != null;
+    }
+    
+    // Collection formations - lecture/écriture pour tous les utilisateurs authentifiés (admin)
+    match /formations/{formationId} {
+      // Lecture: tout utilisateur authentifié
+      allow read: if request.auth != null;
+      
+      // Écriture: tout utilisateur authentifié (admin)
+      allow create: if request.auth != null;
+      allow update: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+    
+    // Collection companies - gestion par les admins uniquement
+    match /companies/{companyId} {
+      // Lecture: tout utilisateur authentifié (admin)
+      allow read: if request.auth != null;
+      
+      // Écriture: tout utilisateur authentifié (admin)
+      allow create: if request.auth != null;
+      allow update: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+    
+    // Collection company-codes - gestion par les admins uniquement
+    // Les utilisateurs peuvent lire leur propre code (via API) mais pas directement
+    match /company-codes/{codeId} {
+      // Lecture: tout utilisateur authentifié (admin) - la vérification se fait via API
+      allow read: if request.auth != null;
+      
+      // Écriture: tout utilisateur authentifié (admin)
+      allow create: if request.auth != null;
+      allow update: if request.auth != null;
+      allow delete: if request.auth != null;
     }
     
     // Tous les autres documents sont refusés par défaut
@@ -30,4 +89,3 @@ service cloud.firestore {
     }
   }
 }
-

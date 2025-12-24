@@ -5,10 +5,10 @@ import { useState } from "react";
 
 export default function LandingPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("packs");
+  const [activeTab, setActiveTab] = useState("initiales");
 
-
-  const packs = [
+  // Formations continues : DCI, DDA, LAB + Packs
+  const formationsContinues = [
     {
       id: "pack-dci-dda-lab",
       name: "Pack DCI + DDA + LAB",
@@ -27,9 +27,6 @@ export default function LandingPage() {
       popular: false,
       type: "pack",
     },
-  ];
-
-  const individualTrainings = [
     {
       id: "dci",
       name: "DCI",
@@ -57,6 +54,10 @@ export default function LandingPage() {
       popular: false,
       type: "individual",
     },
+  ];
+
+  // Formations initiales : IAS, IOBSP
+  const formationsInitiales = [
     {
       id: "iobsp-1",
       name: "IOBSP 1",
@@ -133,12 +134,13 @@ export default function LandingPage() {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#formations" className="text-slate-700 hover:text-teal-600 font-medium transition-colors">
+            <a href="#formations" className="cursor-pointer text-slate-700 hover:text-teal-600 font-medium transition-colors">
               Formations
             </a>
-            <a href="#about" className="text-slate-700 hover:text-teal-600 font-medium transition-colors">
+            <a href="#about" className="cursor-pointer text-slate-700 hover:text-teal-600 font-medium transition-colors">
               À propos
             </a>
+       
             <button
               onClick={handleLogin}
               className="cursor-pointer text-slate-700 hover:text-teal-600 font-medium transition-colors"
@@ -395,31 +397,31 @@ export default function LandingPage() {
           <div className="flex justify-center mb-12">
             <div className="inline-flex bg-white/80 backdrop-blur-lg rounded-2xl p-2 shadow-xl border border-slate-200">
               <button
-                onClick={() => setActiveTab("packs")}
+                onClick={() => setActiveTab("initiales")}
                 className={`cursor-pointer px-8 py-3 rounded-xl font-bold text-base transition-all duration-300 ${
-                  activeTab === "packs"
+                  activeTab === "initiales"
                     ? "bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg shadow-teal-500/30"
                     : "text-slate-700 hover:text-teal-600"
                 }`}
               >
-                Packs
+                Formations initiales
               </button>
               <button
-                onClick={() => setActiveTab("individual")}
+                onClick={() => setActiveTab("continues")}
                 className={`cursor-pointer px-8 py-3 rounded-xl font-bold text-base transition-all duration-300 ${
-                  activeTab === "individual"
+                  activeTab === "continues"
                     ? "bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg shadow-teal-500/30"
                     : "text-slate-700 hover:text-teal-600"
                 }`}
               >
-                Formations à l'unité
+                Formations continues
               </button>
             </div>
           </div>
 
           {/* Training Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {(activeTab === "packs" ? packs : individualTrainings).map((training) => (
+            {(activeTab === "continues" ? formationsContinues : formationsInitiales).map((training) => (
               <div
                 key={training.id}
                 className={`group relative bg-white rounded-3xl border-2 overflow-hidden transition-all duration-300 ${
@@ -790,10 +792,10 @@ export default function LandingPage() {
               <span className="text-xl font-bold">Progresys</span>
             </div>
             <div className="flex items-center gap-6 text-slate-400">
-              <a href="#formations" className="hover:text-white transition-colors">
+              <a href="#formations" className="cursor-pointer hover:text-white transition-colors">
                 Formations
               </a>
-              <a href="#about" className="hover:text-white transition-colors">
+              <a href="#about" className="cursor-pointer hover:text-white transition-colors">
                 À propos
               </a>
               <button onClick={handleLogin} className="cursor-pointer hover:text-white transition-colors">

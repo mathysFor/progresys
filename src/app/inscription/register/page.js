@@ -26,6 +26,7 @@ function RegisterContent() {
     address: "",
     email: "",
     paidByCompany: false,
+    companyCode: "",
   });
 
   useEffect(() => {
@@ -57,6 +58,7 @@ function RegisterContent() {
               address: userData.address || registrationData.address || "",
               email: emailParam || userData.email || registrationData.email || "",
               paidByCompany: registrationData.paidByCompany || false,
+              companyCode: registrationData.companyCode || "",
             }));
             return;
           }
@@ -75,6 +77,7 @@ function RegisterContent() {
           address: registrationData.address || "",
           email: emailParam || registrationData.email || "",
           paidByCompany: registrationData.paidByCompany || false,
+          companyCode: registrationData.companyCode || "",
         }));
       } else if (emailParam) {
         // Si pas de données mais email dans l'URL
@@ -111,7 +114,21 @@ function RegisterContent() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const fieldValue = type === "checkbox" ? checked : value;
+    let fieldValue = type === "checkbox" ? checked : value;
+    
+    // Format company code with dashes (XXX-XX-XX format like DTR-XG-YS)
+    if (name === "companyCode") {
+      // Remove all non-alphanumeric characters and convert to uppercase
+      const cleaned = value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+      // Add dashes at positions 3 and 5 (format: XXX-XX-XX)
+      if (cleaned.length <= 3) {
+        fieldValue = cleaned;
+      } else if (cleaned.length <= 5) {
+        fieldValue = `${cleaned.slice(0, 3)}-${cleaned.slice(3)}`;
+      } else {
+        fieldValue = `${cleaned.slice(0, 3)}-${cleaned.slice(3, 5)}-${cleaned.slice(5, 7)}`;
+      }
+    }
     
     setFormData(prev => ({
       ...prev,
@@ -142,13 +159,62 @@ function RegisterContent() {
     // Validate all fields
     const newErrors = {};
     Object.keys(formData).forEach(key => {
-      if (key !== "paidByCompany") {
+      if (key !== "paidByCompany" && key !== "companyCode") {
         const error = validateField(key, formData[key]);
         if (error) {
           newErrors[key] = error;
         }
       }
     });
+
+    // Si payé par entreprise, valider le code
+    if (formData.paidByCompany) {
+      if (!formData.companyCode || formData.companyCode.trim() === "") {
+        newErrors.companyCode = "Le code d'accès est requis";
+      } else {
+        // Vérifier le code via API
+        try {
+          const response = await fetch("/api/verify-company-code", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              code: formData.companyCode.toUpperCase().trim().replace(/\s+/g, ''),
+              email: formData.email
+            }),
+          });
+          
+          const result = await response.json();
+          
+          if (result.error || !result.valid) {
+            newErrors.companyCode = result.error || "Code invalide";
+            setErrors(newErrors);
+            setIsLoading(false);
+            return;
+          }
+          
+          // Code valide, sauvegarder les infos de l'entreprise
+          const completeData = {
+            ...registrationData, // Inclut les formations
+            ...formData, // Ajoute les infos personnelles
+            companyId: result.companyId,
+            companyCodeId: result.codeId,
+            companyName: result.companyName,
+          };
+          saveRegistrationData(completeData);
+          
+          // Rediriger vers la confirmation
+          setTimeout(() => {
+            router.push("/inscription/confirmation");
+          }, 300);
+          return;
+        } catch (err) {
+          newErrors.companyCode = "Erreur lors de la vérification du code";
+          setErrors(newErrors);
+          setIsLoading(false);
+          return;
+        }
+      }
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -163,7 +229,7 @@ function RegisterContent() {
     };
     saveRegistrationData(completeData);
 
-    // Si payé par société, rediriger directement vers la confirmation
+    // Si payé par société (sans code, ancien système), rediriger directement vers la confirmation
     if (formData.paidByCompany) {
       setTimeout(() => {
         router.push("/inscription/confirmation");
@@ -507,6 +573,52 @@ function RegisterContent() {
                 Ma formation est payée par une société
               </label>
             </div>
+
+            {/* Champ Code d'accès entreprise */}
+            {formData.paidByCompany && (
+              <div className="space-y-4 p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                <div className="flex items-center gap-2 mb-2">
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <h3 className="font-bold text-slate-900">Code d'accès entreprise</h3>
+                </div>
+                
+                <div>
+                  <label htmlFor="companyCode" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Code d'accès * <span className="text-xs font-normal text-slate-500">(reçu par email)</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                      </svg>
+                    </div>
+                    <input
+                      id="companyCode"
+                      name="companyCode"
+                      type="text"
+                      value={formData.companyCode || ""}
+                      onChange={handleChange}
+                      placeholder="ABC-XY-ZT"
+                      maxLength={9}
+                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl text-slate-900 placeholder-slate-400 focus:ring-4 outline-none transition-all duration-300 ${
+                        errors.companyCode 
+                          ? "border-red-300 focus:border-red-400 focus:ring-red-500/20" 
+                          : "border-blue-200 focus:border-blue-400 focus:ring-blue-500/20"
+                      }`}
+                      style={{ textTransform: 'uppercase' }}
+                    />
+                  </div>
+                  {errors.companyCode && (
+                    <p className="mt-1 text-sm text-red-600">{errors.companyCode}</p>
+                  )}
+                  <p className="mt-2 text-xs text-slate-600">
+                    Si vous n'avez pas reçu votre code, contactez votre entreprise ou notre support.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Submit Button */}
             <button

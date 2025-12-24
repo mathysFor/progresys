@@ -96,3 +96,30 @@ body {
 .animate-glow {
   animation: glow 3s ease-in-out infinite;
 }
+
+/* Fix pour les boutons : les éléments enfants n'interceptent pas les événements de pointeur */
+button > * {
+  pointer-events: none;
+}
+
+/* Exception pour les éléments interactifs dans les boutons */
+button > input,
+button > select,
+button > textarea,
+button > button {
+  pointer-events: auto;
+}
+
+/* Force cursor pointer sur tous les boutons et liens cliquables */
+button,
+a,
+[role="button"],
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+/* Supprime le cursor pointer quand disabled */
+button:disabled,
+[disabled] {
+  cursor: not-allowed !important;
+}
