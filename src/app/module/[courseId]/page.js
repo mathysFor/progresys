@@ -27,14 +27,34 @@ export default function ModulePage() {
   const [lastSaved, setLastSaved] = useState(null);
   const [userProgress, setUserProgress] = useState({});
   const [formationTimeSpent, setFormationTimeSpent] = useState(0);
+  const [isPageVisible, setIsPageVisible] = useState(true);
   const timerIntervalRef = useRef(null);
   const saveIntervalRef = useRef(null);
   const startTimeRef = useRef(null);
   const pausedTimeRef = useRef(null);
+  const elapsedAtPauseRef = useRef(null);
   const wasPausedRef = useRef(false);
 
   // Inactivity detection: 15 minutes = 900000ms, warning at 14min30 = 30000ms before
   const { isActive, timeUntilLogout, resetTimer } = useInactivityDetector(900000, 30000);
+
+  // Detect page visibility changes (tab switch, minimize window, etc.)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const isVisible = document.visibilityState === "visible";
+      setIsPageVisible(isVisible);
+    };
+
+    // Set initial state
+    setIsPageVisible(document.visibilityState === "visible");
+
+    // Listen for visibility changes
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   // Handle logout when timeUntilLogout reaches 0
   useEffect(() => {
@@ -42,10 +62,10 @@ export default function ModulePage() {
       const handleLogout = async () => {
         // Save current progress before logout
         if (course && startTimeRef.current) {
-          const now = wasPausedRef.current && pausedTimeRef.current 
-            ? pausedTimeRef.current 
-            : Date.now();
-          const elapsedSeconds = Math.floor((now - startTimeRef.current) / 1000);
+          // Use elapsed time at pause if we're currently paused, otherwise calculate from start time
+          const elapsedSeconds = wasPausedRef.current && elapsedAtPauseRef.current !== null
+            ? elapsedAtPauseRef.current
+            : Math.floor((Date.now() - startTimeRef.current) / 1000);
           const duration = course.durationSeconds || 3600;
           const percentComplete = Math.min(100, (elapsedSeconds / duration) * 100);
 
@@ -137,28 +157,32 @@ export default function ModulePage() {
       startTimeRef.current = Date.now() - (initialTimeSpent * 1000);
     }
 
-    // If user becomes inactive, pause the timer
-    if (!isActive) {
-      // Save the current time when pausing
-      if (!wasPausedRef.current) {
-        pausedTimeRef.current = Date.now();
+    // If user becomes inactive or page is not visible, pause the timer
+    if (!isActive || !isPageVisible) {
+      // Save the current elapsed time when pausing
+      if (!wasPausedRef.current && startTimeRef.current) {
+        const now = Date.now();
+        elapsedAtPauseRef.current = Math.floor((now - startTimeRef.current) / 1000);
+        pausedTimeRef.current = now;
         wasPausedRef.current = true;
       }
-      return; // Don't start intervals when inactive
+      return; // Don't start intervals when inactive or page hidden
     }
 
-    // User is active - resume or start the timer
-    if (wasPausedRef.current && pausedTimeRef.current) {
-      // Adjust start time to account for the pause duration
-      const pauseDuration = pausedTimeRef.current - (startTimeRef.current + ((progress.timeSpentSeconds || 0) * 1000));
-      startTimeRef.current = startTimeRef.current + pauseDuration;
+    // User is active and page is visible - resume or start the timer
+    if (wasPausedRef.current && elapsedAtPauseRef.current !== null && startTimeRef.current) {
+      // Adjust start time so that elapsed time remains the same as when we paused
+      // This effectively "skips" the time spent while paused
+      const now = Date.now();
+      startTimeRef.current = now - (elapsedAtPauseRef.current * 1000);
       pausedTimeRef.current = null;
+      elapsedAtPauseRef.current = null;
       wasPausedRef.current = false;
     }
 
     // Start timer that increments every second
     timerIntervalRef.current = setInterval(() => {
-      if (!isActive) return; // Double check, should not happen but safety
+      if (!isActive || !isPageVisible) return; // Double check, should not happen but safety
 
       const now = Date.now();
       const elapsedSeconds = Math.floor((now - startTimeRef.current) / 1000);
@@ -196,9 +220,9 @@ export default function ModulePage() {
       });
     }, 1000); // Update every second
 
-    // Save to Firestore every 30 seconds (only when active)
+    // Save to Firestore every 30 seconds (only when active and page visible)
     saveIntervalRef.current = setInterval(async () => {
-      if (course && startTimeRef.current && isActive) {
+      if (course && startTimeRef.current && isActive && isPageVisible) {
         const now = Date.now();
         const elapsedSeconds = Math.floor((now - startTimeRef.current) / 1000);
         const duration = course.durationSeconds || 3600;
@@ -226,8 +250,8 @@ export default function ModulePage() {
         saveIntervalRef.current = null;
       }
       
-      // Final save on unmount (only if active)
-      if (course && startTimeRef.current && isActive) {
+      // Final save on unmount (only if active and page visible)
+      if (course && startTimeRef.current && isActive && isPageVisible) {
         const now = Date.now();
         const elapsedSeconds = Math.floor((now - startTimeRef.current) / 1000);
         const duration = course.durationSeconds || 3600;
@@ -242,7 +266,7 @@ export default function ModulePage() {
         updateCourseProgress(courseId, finalProgress);
       }
     };
-  }, [course, courseId, progress?.lastVideoPositionSeconds, isActive]);
+  }, [course, courseId, progress?.lastVideoPositionSeconds, isActive, isPageVisible]);
 
   // Auto-save progress (for VideoPlayer if needed)
   const handleProgressUpdate = useCallback(async (timeSpent) => {

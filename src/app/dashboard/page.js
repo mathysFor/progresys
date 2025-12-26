@@ -6,6 +6,7 @@ import { getProgress, getUserSession, getEntitlements } from "../../lib/progress
 import { signOut } from "../../lib/firebase/auth.js";
 import { useAuthState } from "../../lib/hooks/useAuthState.js";
 import { useSessionTracking } from "../../lib/hooks/useSessionTracking.js";
+import { useAdminAuth } from "../../lib/hooks/useAdminAuth.js";
 import { getFormations } from "../../lib/mock/formations.js";
 import { getFormationProgress, getTCProgress } from "../../lib/selectors/formations.js";
 import { getResumeCourse, hasPdfContent, getPdfContent } from "../../lib/selectors/courses.js";
@@ -17,6 +18,7 @@ import ModuleRoadmap from "../../components/ModuleRoadmap.js";
 export default function DashboardPage() {
   const router = useRouter();
   const { user: authUser, loading: authLoading } = useAuthState();
+  const { isAdmin } = useAdminAuth();
   useSessionTracking(); // Track session login/logout
   const [formations, setFormations] = useState([]);
   const [userProgress, setUserProgress] = useState({});
@@ -160,12 +162,25 @@ export default function DashboardPage() {
                 Mes Formations
               </h1>
             </div>
-            <button
-              onClick={handleLogout}
-              className="cursor-pointer self-start sm:self-auto px-5 py-2.5 rounded-full bg-slate-900/80 backdrop-blur-sm border border-slate-900/20 text-white text-sm font-medium hover:bg-slate-900 transition-all duration-200"
-            >
-              Déconnexion
-            </button>
+            <div className="flex items-center gap-3">
+              {isAdmin && (
+                <button
+                  onClick={() => router.push("/admin/quiz")}
+                  className="cursor-pointer self-start sm:self-auto px-5 py-2.5 rounded-full bg-purple-600/90 backdrop-blur-sm border border-purple-600/20 text-white text-sm font-medium hover:bg-purple-700 transition-all duration-200 flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Gérer Quiz
+                </button>
+              )}
+              <button
+                onClick={handleLogout}
+                className="cursor-pointer self-start sm:self-auto px-5 py-2.5 rounded-full bg-slate-900/80 backdrop-blur-sm border border-slate-900/20 text-white text-sm font-medium hover:bg-slate-900 transition-all duration-200"
+              >
+                Déconnexion
+              </button>
+            </div>
           </div>
           
           {/* Stats bar */}

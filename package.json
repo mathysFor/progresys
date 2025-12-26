@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "import-quiz": "node scripts/import-quiz-questions.js",
+    "import-quiz-json": "node scripts/import-quiz-from-json.js"
   },
   "dependencies": {
     "@getbrevo/brevo": "^3.0.1",
@@ -23,6 +25,7 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "16.1.0",
+    "mammoth": "^1.11.0",
     "tailwindcss": "^4"
   }
 }

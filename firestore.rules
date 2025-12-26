@@ -83,6 +83,41 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
     
+    // Collection quiz_questions - questions du quiz
+    match /quiz_questions/{questionId} {
+      // Lecture: publique (pour permettre le quiz sans auth)
+      allow read: if true;
+      
+      // Écriture: uniquement les admins
+      allow create: if request.auth != null;
+      allow update: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+    
+    // Collection quiz_attempts - tentatives de quiz
+    match /quiz_attempts/{attemptId} {
+      // Lecture: uniquement les admins
+      allow read: if request.auth != null;
+      
+      // Création: publique (pour permettre la soumission sans auth)
+      allow create: if true;
+      
+      // Modification: uniquement les admins
+      allow update: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+    
+    // Collection quiz_participants - participants autorisés
+    match /quiz_participants/{participantId} {
+      // Lecture: publique (pour vérifier si email est autorisé)
+      allow read: if true;
+      
+      // Écriture: uniquement les admins
+      allow create: if request.auth != null;
+      allow update: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+    
     // Tous les autres documents sont refusés par défaut
     match /{document=**} {
       allow read, write: if false;

@@ -1,0 +1,1952 @@
+[
+  {
+    "id": "1",
+    "question": "Qui délivre les agréments aux banques, assureurs, organismes de prévoyance et mutuelles ?",
+    "choices": [
+      {
+        "id": "1.1",
+        "text": "L'AMF",
+        "isCorrect": false
+      },
+      {
+        "id": "1.2",
+        "text": "L'ORIAS",
+        "isCorrect": false
+      },
+      {
+        "id": "1.3",
+        "text": "l'ACPR",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "1.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "2",
+    "question": "Parmi ces intermédiaires, lequel exerce l'intermédiation en vertu d'un mandat de son client ?",
+    "choices": [
+      {
+        "id": "2.1",
+        "text": "Le courtier",
+        "isCorrect": true
+      },
+      {
+        "id": "2.2",
+        "text": "Le mandataire exclusif",
+        "isCorrect": false
+      },
+      {
+        "id": "2.3",
+        "text": "Le mandataire non exclusif",
+        "isCorrect": false
+      },
+      {
+        "id": "2.4",
+        "text": "Le mandataire d'intermédiaire",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "2.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "3",
+    "question": "Pour exercer en tant qu’IOB, quelles sont les conditions professionnelles à respecter obligatoirement ?",
+    "choices": [
+      {
+        "id": "3.1",
+        "text": "Avoir 7 ans d’expérience professionnelle dans le monde bancaire",
+        "isCorrect": false
+      },
+      {
+        "id": "3.2",
+        "text": "L’honorabilité",
+        "isCorrect": true
+      },
+      {
+        "id": "3.3",
+        "text": "Posséder la carte de transaction immobilière",
+        "isCorrect": false
+      },
+      {
+        "id": "3.4",
+        "text": "Avoir la capacité professionnelle",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "3.2",
+      "3.4"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "4",
+    "question": "Comment s’appelle le taux d’intérêt maximal à ne pas dépasser lors d’un crédit ?",
+    "choices": [
+      {
+        "id": "4.1",
+        "text": "Taux effectif global",
+        "isCorrect": false
+      },
+      {
+        "id": "4.2",
+        "text": "Taux de référence de la banque centrale",
+        "isCorrect": false
+      },
+      {
+        "id": "4.3",
+        "text": "Taux d’usure",
+        "isCorrect": true
+      },
+      {
+        "id": "4.4",
+        "text": "Taux nominal",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "4.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "5",
+    "question": "Comment s’appelle l’organe de supervision français de la Banque et de l’Assurance ?",
+    "choices": [
+      {
+        "id": "5.1",
+        "text": "L'AMF",
+        "isCorrect": false
+      },
+      {
+        "id": "5.2",
+        "text": "Le Comité de Bâle",
+        "isCorrect": false
+      },
+      {
+        "id": "5.3",
+        "text": "L'ORIAS",
+        "isCorrect": false
+      },
+      {
+        "id": "5.4",
+        "text": "L'ACPR",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "5.4"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "6",
+    "question": "L'hypothèque légale spéciale du prêteur de deniers permet de garantir un immeuble déjà construit ou un terrain.",
+    "choices": [
+      {
+        "id": "6.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "6.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "6.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "7",
+    "question": "Quels sont les avantages d’une assurance emprunteur individuelle par rapport à une assurance de groupe ?",
+    "choices": [
+      {
+        "id": "7.1",
+        "text": "La banque est obligée d’accepter l’assurance individuelle sans condition",
+        "isCorrect": false
+      },
+      {
+        "id": "7.2",
+        "text": "Le contrat est personnalisé en fonction du profil de l’emprunteur",
+        "isCorrect": true
+      },
+      {
+        "id": "7.3",
+        "text": "Elle est souvent moins chère",
+        "isCorrect": true
+      },
+      {
+        "id": "7.4",
+        "text": "Elle peut être résiliée beaucoup plus facilement",
+        "isCorrect": false
+      },
+      {
+        "id": "7.5",
+        "text": "Son coût est dégressif car elle est toujours calculée à partir du capital restant dû",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "7.2",
+      "7.3",
+      "7.5"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "8",
+    "question": "La banque peut proposer un taux d’intérêt plus attractif en cas de choix de l’assurance de groupe.",
+    "choices": [
+      {
+        "id": "8.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "8.2",
+        "text": "faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "8.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "9",
+    "question": "Quels sont garanties obligatoires pour une assurance emprunteur ?",
+    "choices": [
+      {
+        "id": "9.1",
+        "text": "PTIA",
+        "isCorrect": true
+      },
+      {
+        "id": "9.2",
+        "text": "ITT",
+        "isCorrect": false
+      },
+      {
+        "id": "9.3",
+        "text": "IPP",
+        "isCorrect": false
+      },
+      {
+        "id": "9.4",
+        "text": "IPT",
+        "isCorrect": false
+      },
+      {
+        "id": "9.5",
+        "text": "Décès",
+        "isCorrect": true
+      },
+      {
+        "id": "9.6",
+        "text": "Perte d'emploi",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "9.1",
+      "9.5"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "10",
+    "question": "A quel organisme les professionnels de l’assurance doivent-ils déclarer une opération susceptible de constituer une opération de blanchiment de capitaux ?",
+    "choices": [
+      {
+        "id": "10.1",
+        "text": "CNIL",
+        "isCorrect": false
+      },
+      {
+        "id": "10.2",
+        "text": "LCB-FT",
+        "isCorrect": false
+      },
+      {
+        "id": "10.3",
+        "text": "TRACFIN",
+        "isCorrect": true
+      },
+      {
+        "id": "10.4",
+        "text": "ACPR",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "10.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "11",
+    "question": "En cas de soupçon de blanchiment, il est préférable d’exécuter la transaction avant de faire la déclaration de soupçon afin de récolter des preuves.",
+    "choices": [
+      {
+        "id": "11.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "11.2",
+        "text": "faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "11.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "12",
+    "question": "Une personne réalisant moins de 20 operations par an en service de paiement n’est pas soumise à l’obligation d’immatriculation à l’ORIAS.",
+    "choices": [
+      {
+        "id": "12.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "12.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "12.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "13",
+    "question": "Les partenaires d’un PACS ayant opté pour le régime de l’indivision sont propriétaires pour moitié d'un bien acheté postérieurement au PACS même si celui-ci a été acheté par un seul des partenaires.",
+    "choices": [
+      {
+        "id": "13.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "13.2",
+        "text": "faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "13.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "14",
+    "question": "Qu’est-ce qui peut justifier la levée du secret bancaire ?",
+    "choices": [
+      {
+        "id": "14.1",
+        "text": "Un soupçon de blanchiment",
+        "isCorrect": false
+      },
+      {
+        "id": "14.2",
+        "text": "Une demande de la part d’un employeur",
+        "isCorrect": false
+      },
+      {
+        "id": "14.3",
+        "text": "Une demande d’une banque partenaire avant l’ouverture d’un compte pour un client commun",
+        "isCorrect": false
+      },
+      {
+        "id": "14.4",
+        "text": "Une procédure de surendettement",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "14.4"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "15",
+    "question": "Quelles sont les caractéristiques d’un crédit à la consommation ?",
+    "choices": [
+      {
+        "id": "15.1",
+        "text": "Le montant du crédit est compris entre 200 euros et 75000 euros",
+        "isCorrect": true
+      },
+      {
+        "id": "15.2",
+        "text": "Il s’adresse uniquement aux particuliers",
+        "isCorrect": true
+      },
+      {
+        "id": "15.3",
+        "text": "Il doit forcément être souscrit en précisant l’objet financé",
+        "isCorrect": false
+      },
+      {
+        "id": "15.4",
+        "text": "Il peut permettre de financer un bien immobilier",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "15.1",
+      "15.2"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "16",
+    "question": "Quelle est la durée maximale d'un prêt relais ?",
+    "choices": [
+      {
+        "id": "16.1",
+        "text": "24 mois",
+        "isCorrect": true
+      },
+      {
+        "id": "16.2",
+        "text": "48 mois",
+        "isCorrect": false
+      },
+      {
+        "id": "16.3",
+        "text": "Jusqu’à ce que le bien soit vendu",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "16.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "17",
+    "question": "Avec un prêt viager hypothécaire, l'emprunteur reste propriétaire de son bien.",
+    "choices": [
+      {
+        "id": "17.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "17.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "17.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "18",
+    "question": "Quel est le taux à indiquer obligatoirement au client dans une offre préalable de crédit ?",
+    "choices": [
+      {
+        "id": "18.1",
+        "text": "Le taux d'usure",
+        "isCorrect": false
+      },
+      {
+        "id": "18.2",
+        "text": "Le TEG",
+        "isCorrect": false
+      },
+      {
+        "id": "18.3",
+        "text": "Le TAEG",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "18.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "19",
+    "question": "Quel est le taux d’endettement maximum conseillé selon la recommandation du Haut Conseil de Stabilité Financière ?",
+    "choices": [
+      {
+        "id": "19.1",
+        "text": "45%",
+        "isCorrect": false
+      },
+      {
+        "id": "19.2",
+        "text": "25%",
+        "isCorrect": false
+      },
+      {
+        "id": "19.3",
+        "text": "66%",
+        "isCorrect": false
+      },
+      {
+        "id": "19.4",
+        "text": "35%",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "19.4"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "20",
+    "question": "En cas de remboursement anticipé d’un prêt immobilier, quel sera le montant de l’indemnité de remboursement anticipé ?",
+    "choices": [
+      {
+        "id": "20.1",
+        "text": "6 mois d’intérêts",
+        "isCorrect": false
+      },
+      {
+        "id": "20.2",
+        "text": "8 mois d’intérêts ou 1% du capital restant dû",
+        "isCorrect": false
+      },
+      {
+        "id": "20.3",
+        "text": "6 mois d’intérêts ou 3% du capital restant dû",
+        "isCorrect": true
+      },
+      {
+        "id": "20.4",
+        "text": "3% du capital restant dû",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "20.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "21",
+    "question": "Qui gère le registre des intermédiaires ?",
+    "choices": [
+      {
+        "id": "21.1",
+        "text": "L'ACPR",
+        "isCorrect": false
+      },
+      {
+        "id": "21.2",
+        "text": "L'AMF",
+        "isCorrect": false
+      },
+      {
+        "id": "21.3",
+        "text": "L'ORIAS",
+        "isCorrect": true
+      },
+      {
+        "id": "21.4",
+        "text": "La Banque de France",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "21.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "22",
+    "question": "En cas de surendettement, la personne est inscrite au :",
+    "choices": [
+      {
+        "id": "22.1",
+        "text": "FCC",
+        "isCorrect": true
+      },
+      {
+        "id": "22.2",
+        "text": "FIPEN",
+        "isCorrect": false
+      },
+      {
+        "id": "22.3",
+        "text": "FICP",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "22.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "23",
+    "question": "Quelle est la principale différence entre un regroupement de crédits et une renégociation de crédit ?",
+    "choices": [
+      {
+        "id": "23.1",
+        "text": "Le regroupement de crédits porte sur au moins 2 crédits alors que la renégociation porte sur un seul crédit.",
+        "isCorrect": true
+      },
+      {
+        "id": "23.2",
+        "text": "Le regroupement de crédits doit être obligatoirement réalisé dans un autre établissement prêteur alors que la renégociation de crédits se fait avec le même établissement prêteur.",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "23.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "24",
+    "question": "Quelle est la première loi qui a donné un cadre législatif au regroupement de crédits ?",
+    "choices": [
+      {
+        "id": "24.1",
+        "text": "Loi Scrivener",
+        "isCorrect": false
+      },
+      {
+        "id": "24.2",
+        "text": "Loi Chatel",
+        "isCorrect": false
+      },
+      {
+        "id": "24.3",
+        "text": "Loi Lagarde",
+        "isCorrect": true
+      },
+      {
+        "id": "24.4",
+        "text": "Loi Hamon",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "24.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "25",
+    "question": "La grosse majorité des regroupements de crédits est réalisée par les banques de dépôt.",
+    "choices": [
+      {
+        "id": "25.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "25.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "25.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "26",
+    "question": "Un regroupement de crédit contenant au moins un crédit immobilier sera soumis à la législation des crédits immobiliers.",
+    "choices": [
+      {
+        "id": "26.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "26.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "26.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "27",
+    "question": "Quelle est la principale finalité d’un regroupement de crédits ?",
+    "choices": [
+      {
+        "id": "27.1",
+        "text": "Réduire ses mensualités",
+        "isCorrect": true
+      },
+      {
+        "id": "27.2",
+        "text": "Diminuer le coût total du crédit",
+        "isCorrect": false
+      },
+      {
+        "id": "27.3",
+        "text": "Renégocier le taux d’intérêt de ses crédits",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "27.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "28",
+    "question": "Le regroupement de crédits hypothécaire s’adresse :",
+    "choices": [
+      {
+        "id": "28.1",
+        "text": "(plusieurs réponses possibles)",
+        "isCorrect": false
+      },
+      {
+        "id": "28.2",
+        "text": "Aux propriétaires",
+        "isCorrect": true
+      },
+      {
+        "id": "28.3",
+        "text": "Aux locataires",
+        "isCorrect": false
+      },
+      {
+        "id": "28.4",
+        "text": "Aux accédants à la propriété",
+        "isCorrect": true
+      },
+      {
+        "id": "28.5",
+        "text": "Aux personnes logées à titre gratuit",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "28.2",
+      "28.4"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "29",
+    "question": "Un regroupement de plusieurs crédits à la consommation garanti par une hypothèque est régi par la règlementation des crédits immobiliers.",
+    "choices": [
+      {
+        "id": "29.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "29.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "29.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "30",
+    "question": "Le taux d'intérêt d’un regroupement de crédits à la consommation sera généralement plus faible que s’il s’agit d’un regroupement de crédits immobiliers.",
+    "choices": [
+      {
+        "id": "30.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "30.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "30.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "31",
+    "question": "Quelles sont les dettes ne pouvant pas être prises en compte dans un regroupement de crédits ? (plusieurs réponses possibles) Autorisation de découvert Prêt à taux zéro",
+    "choices": [
+      {
+        "id": "31.1",
+        "text": "Dettes de jeux",
+        "isCorrect": true
+      },
+      {
+        "id": "31.2",
+        "text": "Pensions alimentaires non versées",
+        "isCorrect": false
+      },
+      {
+        "id": "31.3",
+        "text": "Crédit immobilier pour un bien à usage professionnel",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "31.1",
+      "31.3"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "32",
+    "question": "Il est interdit de monter un dossier de regroupement de crédits dans le cas où le demandeur n’est pas en mesure de présenter l’ensemble des justificatifs de revenus, identité, prêts…",
+    "choices": [
+      {
+        "id": "32.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "32.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "32.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "33",
+    "question": "Une personne fichée au FICP n’est pas éligible au regroupement de crédits.",
+    "choices": [
+      {
+        "id": "33.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "33.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "33.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "34",
+    "question": "Quelle est la formule de calcul de la marge hypothécaire ?",
+    "choices": [
+      {
+        "id": "34.1",
+        "text": "(Montant estimé du bien x50%) - Solde des prêts en cours sur ce bien",
+        "isCorrect": false
+      },
+      {
+        "id": "34.2",
+        "text": "(Montant estimé du bien x Ratio hypothécaire) - Solde des prêts en cours sur ce bien",
+        "isCorrect": true
+      },
+      {
+        "id": "34.3",
+        "text": "(Montant estimé du bien x Ratio hypothécaire) – Montant du regroupement de crédits",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "34.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "35",
+    "question": "Combien de pièces d’identité doivent être demandées lorsque le dossier de regroupement de crédits est réalisé 100% à distance ?",
+    "choices": [
+      {
+        "id": "35.1",
+        "text": "1",
+        "isCorrect": false
+      },
+      {
+        "id": "35.2",
+        "text": "2",
+        "isCorrect": true
+      },
+      {
+        "id": "35.3",
+        "text": "3",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "35.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "36",
+    "question": "En général, le regroupement de crédits n’est pas accessible aux commerçants exerçant leur activité depuis moins de 3 ans.",
+    "choices": [
+      {
+        "id": "36.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "36.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "36.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "37",
+    "question": "Quel document complémentaire à la fiche d’information doit être obligatoirement remis pour un regroupement de crédits de type LS1 ?",
+    "choices": [
+      {
+        "id": "37.1",
+        "text": "La FIPEN",
+        "isCorrect": true
+      },
+      {
+        "id": "37.2",
+        "text": "La FISE",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "37.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "38",
+    "question": "Quel est le délai de rétractation pour un regroupement de crédits à la consommation ?",
+    "choices": [
+      {
+        "id": "38.1",
+        "text": "7 jours",
+        "isCorrect": false
+      },
+      {
+        "id": "38.2",
+        "text": "10 jours",
+        "isCorrect": false
+      },
+      {
+        "id": "38.3",
+        "text": "14 jours",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "38.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "39",
+    "question": "Quel est le montant des indemnités de remboursement anticipé d’un crédit à la consommation contracté avant le 30/04/2011 ?",
+    "choices": [
+      {
+        "id": "39.1",
+        "text": "Pas d’indemnité de remboursement anticipé",
+        "isCorrect": true
+      },
+      {
+        "id": "39.2",
+        "text": "0,5% du capital restant dû",
+        "isCorrect": false
+      },
+      {
+        "id": "39.3",
+        "text": "1% du capital restant dû",
+        "isCorrect": false
+      },
+      {
+        "id": "39.4",
+        "text": "3% du capital restant dû",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "39.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "40",
+    "question": "La directive sur les services de paiement (DSP) est une directive qui a permis d’instaurer un marché unique des services de paiement dans l’Espace Economique Européen.",
+    "choices": [
+      {
+        "id": "40.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "40.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "40.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "41",
+    "question": "Quel est le nombre de pays dans la zone SEPA ?",
+    "choices": [
+      {
+        "id": "41.1",
+        "text": "23",
+        "isCorrect": false
+      },
+      {
+        "id": "41.2",
+        "text": "27",
+        "isCorrect": false
+      },
+      {
+        "id": "41.3",
+        "text": "34",
+        "isCorrect": false
+      },
+      {
+        "id": "41.4",
+        "text": "36",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "41.4"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "42",
+    "question": "Un établissement de monnaie électronique peut également fournir des services de paiement.",
+    "choices": [
+      {
+        "id": "42.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "42.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "42.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "43",
+    "question": "Quel est le montant du reste à charge en cas de paiement frauduleux avant opposition ?",
+    "choices": [
+      {
+        "id": "43.1",
+        "text": "Pas de reste à charge",
+        "isCorrect": false
+      },
+      {
+        "id": "43.2",
+        "text": "50 euros",
+        "isCorrect": true
+      },
+      {
+        "id": "43.3",
+        "text": "100 euros",
+        "isCorrect": false
+      },
+      {
+        "id": "43.4",
+        "text": "150 euros",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "43.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "44",
+    "question": "Un contrat de carte bancaire est un contrat à durée déterminée.",
+    "choices": [
+      {
+        "id": "44.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "44.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "44.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "45",
+    "question": "Avec une carte de débit sans autorisation systématique, il n’y aura jamais de demande d’autorisation/contrôle du compte.",
+    "choices": [
+      {
+        "id": "45.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "45.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "45.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "46",
+    "question": "Un virement effectué de la France vers la Grèce est un virement international.",
+    "choices": [
+      {
+        "id": "46.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "46.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "46.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "47",
+    "question": "Le délai d’exécution d’un virement SEPA réalisé sur internet est au maximum de 2 jours ouvrables à compter du moment de réception de l’ordre de virement par la banque de l’émetteur.",
+    "choices": [
+      {
+        "id": "47.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "47.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "47.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "48",
+    "question": "Quelle est la durée de validité d’un chèque en France ?",
+    "choices": [
+      {
+        "id": "48.1",
+        "text": "6 mois",
+        "isCorrect": false
+      },
+      {
+        "id": "48.2",
+        "text": "1 an",
+        "isCorrect": false
+      },
+      {
+        "id": "48.3",
+        "text": "1 an et 8 jours",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "48.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "49",
+    "question": "Que doit contenir obligatoirement un contrat-cadre de services de paiement ? (plusieurs réponses possibles) ",
+    "choices": [
+        {
+            "id" : "49.5",
+            "text" : "Des conseils concernant les bonnes pratiques d'utilisation du service de paiement",
+            "isCorrect": false
+        },
+      {
+        "id": "49.1",
+        "text": "Des informations sur la résiliation du contrat-cadre",
+        "isCorrect": true
+      },
+      {
+        "id": "49.2",
+        "text": "Des informations sur le PSP",
+        "isCorrect": true
+      },
+      {
+        "id": "49.3",
+        "text": "Les identifiants de connexion pour accéder au service",
+        "isCorrect": false
+      },
+      {
+        "id": "49.4",
+        "text": "Des informations sur l’utilisation du service de paiement",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "49.1",
+      "49.2",
+      "49.4"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "50",
+    "question": "Sous quel délai maximum le PSP doit-il fournir les informations relatives à l’exécution d’une opération de paiement ?",
+    "choices": [
+      {
+        "id": "50.1",
+        "text": "1 jour",
+        "isCorrect": false
+      },
+      {
+        "id": "50.2",
+        "text": "1 semaine",
+        "isCorrect": false
+      },
+      {
+        "id": "50.3",
+        "text": "1 mois",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "50.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "51",
+    "question": "Quel est le délai maximal pour contester un débit  carte bancaire frauduleux dans l’EEE ?",
+    "choices": [
+      {
+        "id": "51.1",
+        "text": "12 mois",
+        "isCorrect": false
+      },
+      {
+        "id": "51.2",
+        "text": "13 mois",
+        "isCorrect": true
+      },
+      {
+        "id": "51.3",
+        "text": "70 jours",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "51.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "52",
+    "question": "Un particulier s’est fait voler son sac contenant entre autres son chéquier, il a une seule démarche à effectuer auprès du centre national d’appel des chèques perdus ou volés. Il sera alors dégagé de toute responsabilité si son chéquier est utilisé de manière frauduleuse.",
+    "choices": [
+      {
+        "id": "52.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "52.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "52.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "53",
+    "question": "Si un client a ouvert une convention de compte de dépôt, le contrat cadre de services de paiement n’est pas à fournir car il est inclus dans la convention de compte.",
+    "choices": [
+      {
+        "id": "53.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "53.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "53.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "54",
+    "question": "Quelles sont les informations généralement demandées pour l’ouverture d’un compte de monnaie électronique ? (plusieurs réponses possibles)",
+    "choices": [
+      {
+        "id": "54.1",
+        "text": "Adresse",
+        "isCorrect": true
+      },
+      {
+        "id": "54.2",
+        "text": "Mail",
+        "isCorrect": true
+      },
+      {
+        "id": "54.3",
+        "text": "Bulletin de salaire",
+        "isCorrect": false
+      },
+      {
+        "id": "54.4",
+        "text": "Numéro de téléphone",
+        "isCorrect": true
+      },
+      {
+        "id": "54.5",
+        "text": "Dernier avis d'imposition",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "54.1",
+      "54.2",
+      "54.4"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "55",
+    "question": "Un ordre de virement est révocable.",
+    "choices": [
+      {
+        "id": "55.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "55.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "55.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "56",
+    "question": "Un paiement par carte est révocable.",
+    "choices": [
+      {
+        "id": "56.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "56.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "56.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "57",
+    "question": "Le crédit immobilier est un emprunt destiné à couvrir tout ou une partie d'un achat immobilier, d'une opération de construction, ou des travaux sur un bien immobilier.",
+    "choices": [
+      {
+        "id": "57.1",
+        "text": "Oui",
+        "isCorrect": true
+      },
+      {
+        "id": "57.2",
+        "text": "Non",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "57.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "58",
+    "question": "La directive MCD est entrée en vigueur en 2016.",
+    "choices": [
+      {
+        "id": "58.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "58.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "58.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "59",
+    "question": "La loi NEIERTZ comporte deux mesures principales, Lesquelles ?",
+    "choices": [
+      {
+        "id": "59.1",
+        "text": "La mise en place de commissions d'incidents de paiements",
+        "isCorrect": false
+      },
+      {
+        "id": "59.2",
+        "text": "La mise en place de commissions de surendettement",
+        "isCorrect": true
+      },
+      {
+        "id": "59.3",
+        "text": "La création du fichier FICP (Fichier National des Incidents de Remboursement des Crédits aux Particuliers)",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "59.2",
+      "59.3"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "60",
+    "question": "La directive DCI ou MCD est :",
+    "choices": [
+      {
+        "id": "60.1",
+        "text": "Une directive européenne sur le crédit immobilier",
+        "isCorrect": true
+      },
+      {
+        "id": "60.2",
+        "text": "Une directive française sur le crédit immobilier",
+        "isCorrect": false
+      },
+      {
+        "id": "60.3",
+        "text": "Une directive européenne sur le crédit immobilier et à la consommation",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "60.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "61",
+    "question": "Pour exercer leurs activités, les établissements de crédits doivent recevoir un agrément de :",
+    "choices": [
+      {
+        "id": "61.1",
+        "text": "CCRLF",
+        "isCorrect": false
+      },
+      {
+        "id": "61.2",
+        "text": "Caisse des Dépôts et Consignations",
+        "isCorrect": false
+      },
+      {
+        "id": "61.3",
+        "text": "Trésor Public",
+        "isCorrect": false
+      },
+      {
+        "id": "61.4",
+        "text": "ACPR",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "61.4"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "62",
+    "question": "Il n'est pas obligatoire de passer par le notaire pour signer un acte de vente.",
+    "choices": [
+      {
+        "id": "62.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "62.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "62.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "63",
+    "question": "Les montants des honoraires de l'agent immobilier à l'occasion d'une vente sont encadrés par la loi.",
+    "choices": [
+      {
+        "id": "63.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "63.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "63.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "64",
+    "question": "Les Conseillers en Investissement Financier sont immatriculés sur le registre national des intermédiaires.",
+    "choices": [
+      {
+        "id": "64.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "64.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "64.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "65",
+    "question": "Les frais de dossier et d'assurance sont intégrés dans le taux débiteur.",
+    "choices": [
+      {
+        "id": "65.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "65.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "65.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "66",
+    "question": "Un taux fixe a pour particularité de pouvoir déterminer dès la souscription du crédit le montant des intérêts dûs.",
+    "choices": [
+      {
+        "id": "66.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "66.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "66.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "67",
+    "question": "Parmi ces éléments, lesquels sont pris en compte dans le TAEG ?",
+    "choices": [
+      {
+        "id": "67.1",
+        "text": "Les frais de dossier",
+        "isCorrect": true
+      },
+      {
+        "id": "67.2",
+        "text": "Les frais de garantie",
+        "isCorrect": true
+      },
+      {
+        "id": "67.3",
+        "text": "Les frais de notaire",
+        "isCorrect": false
+      },
+      {
+        "id": "67.4",
+        "text": "Les frais de tenue de compte",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "67.1",
+      "67.2",
+      "67.4"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "68",
+    "question": "Le TAEA (Taux annuel effectif de l'assurance) est apparu avec la loi Hamon.",
+    "choices": [
+      {
+        "id": "68.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "68.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "68.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "69",
+    "question": "Une hypothèque ne peut excéder :",
+    "choices": [
+      {
+        "id": "69.1",
+        "text": "30 ans",
+        "isCorrect": false
+      },
+      {
+        "id": "69.2",
+        "text": "40 ans",
+        "isCorrect": false
+      },
+      {
+        "id": "69.3",
+        "text": "50 ans",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "69.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "70",
+    "question": "L'hypothèque spéciale de prêteur de deniers est moins chère qu'une hypothèque classique.",
+    "choices": [
+      {
+        "id": "70.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "70.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "70.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "71",
+    "question": "L'hypothèque spéciale de prêteur de deniers permet de garantir :",
+    "choices": [
+      {
+        "id": "71.1",
+        "text": "Un bien ancien",
+        "isCorrect": true
+      },
+      {
+        "id": "71.2",
+        "text": "Un terrain",
+        "isCorrect": true
+      },
+      {
+        "id": "71.3",
+        "text": "Un bien acheté en VEFA (non encore construit)",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "71.1",
+      "71.2"
+    ],
+    "type": "multiple"
+  },
+  {
+    "id": "72",
+    "question": "En cas de cautionnement solidaire, le créancier doit dans un premier temps vérifier l'insolvabilité de l'emprunteur avant de poursuivre la caution.",
+    "choices": [
+      {
+        "id": "72.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "72.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "72.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "73",
+    "question": "Depuis le 1er octobre 2016, quel est le taux qui doit être obligatoirement communiqué au client pour un crédit à la consommation ?",
+    "choices": [
+      {
+        "id": "73.1",
+        "text": "Le taux débiteur",
+        "isCorrect": false
+      },
+      {
+        "id": "73.2",
+        "text": "Le TEG",
+        "isCorrect": false
+      },
+      {
+        "id": "73.3",
+        "text": "Le TAEG",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "73.3"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "74",
+    "question": "Quelle est la durée maximale d’un crédit renouvelable d’un montant de 4 000 euros ?",
+    "choices": [
+      {
+        "id": "74.1",
+        "text": "2 ans",
+        "isCorrect": false
+      },
+      {
+        "id": "74.2",
+        "text": "3 ans",
+        "isCorrect": false
+      },
+      {
+        "id": "74.3",
+        "text": "4 ans",
+        "isCorrect": false
+      },
+      {
+        "id": "74.4",
+        "text": "5 ans",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "74.4"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "75",
+    "question": "Parmi les garanties ci-dessous, laquelle ne peut pas être utilisée dans le cadre d’un crédit à la consommation ?",
+    "choices": [
+      {
+        "id": "75.1",
+        "text": "L'hypothèque",
+        "isCorrect": false
+      },
+      {
+        "id": "75.2",
+        "text": "L’hypothèque légale spéciale du prêteur de deniers",
+        "isCorrect": true
+      },
+      {
+        "id": "75.3",
+        "text": "Le cautionnement",
+        "isCorrect": false
+      },
+      {
+        "id": "75.4",
+        "text": "Le nantissement",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "75.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "76",
+    "question": "M. Dupont a un besoin d’un prêt personnel de 60 000€. Il dispose d’un appartement d’une valeur de 150 000€. Il a un crédit en cours sur cet appartement de 100 000€. Pourra-t-il garantir son prêt avec la valeur de son appartement ?",
+    "choices": [
+      {
+        "id": "76.1",
+        "text": "Oui",
+        "isCorrect": false
+      },
+      {
+        "id": "76.2",
+        "text": "Non",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "76.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "77",
+    "question": "Le contrat de mariage est un acte notarié.",
+    "choices": [
+      {
+        "id": "77.1",
+        "text": "Vrai",
+        "isCorrect": true
+      },
+      {
+        "id": "77.2",
+        "text": "Faux",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "77.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "78",
+    "question": "Les partenaires liés par un PACS sont obligatoirement soumis à la séparation de biens.",
+    "choices": [
+      {
+        "id": "78.1",
+        "text": "Vrai",
+        "isCorrect": false
+      },
+      {
+        "id": "78.2",
+        "text": "Faux",
+        "isCorrect": true
+      }
+    ],
+    "correctChoiceIds": [
+      "78.2"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "79",
+    "question": "Quel est le régime matrimonial le plus courant en France ?",
+    "choices": [
+      {
+        "id": "79.1",
+        "text": "La communauté légale réduite aux acquêts",
+        "isCorrect": true
+      },
+      {
+        "id": "79.2",
+        "text": "La séparation de biens",
+        "isCorrect": false
+      },
+      {
+        "id": "79.3",
+        "text": "La communauté d'acquêts aménagée",
+        "isCorrect": false
+      },
+      {
+        "id": "79.4",
+        "text": "La communauté universelle",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "79.1"
+    ],
+    "type": "single"
+  }
+]
