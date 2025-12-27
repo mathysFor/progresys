@@ -30,7 +30,6 @@ export default function QuizPage() {
   const [attemptId, setAttemptId] = useState(null);
   const [startedAt, setStartedAt] = useState(null);
   const [results, setResults] = useState(null);
-  const [showQuestionNav, setShowQuestionNav] = useState(false);
 
   // Load questions on mount
   useEffect(() => {
@@ -151,11 +150,6 @@ export default function QuizPage() {
     }
   };
 
-  const handlePreviousQuestion = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
-  };
 
   const handleSubmitQuiz = async () => {
     if (!attemptId || !startedAt) return;
@@ -184,6 +178,32 @@ export default function QuizPage() {
         passed: scoreResult.passed,
         timeSpentSeconds: timeSpent,
       });
+
+      // Send email to administrator (non-blocking)
+      try {
+        const emailResponse = await fetch("/api/quiz/send-results-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            participantEmail: email,
+            score: scoreResult.score,
+            total: scoreResult.total,
+            percentage: scoreResult.percentage,
+            passed: scoreResult.passed,
+            timeSpentSeconds: timeSpent,
+            completedAt: new Date().toISOString(),
+          }),
+        });
+
+        if (!emailResponse.ok) {
+          console.error("Failed to send results email");
+        }
+      } catch (emailError) {
+        // Don't block the user experience if email fails
+        console.error("Error sending results email:", emailError);
+      }
 
       setResults(scoreResult);
       setResults((prev) => ({ ...prev, timeSpent }));
@@ -558,29 +578,7 @@ export default function QuizPage() {
         {/* Bottom navigation */}
         <footer className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-t border-slate-200">
           <div className="max-w-5xl mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <button
-                onClick={handlePreviousQuestion}
-                disabled={currentQuestionIndex === 0}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 font-medium hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                Précédent
-              </button>
-
-              {/* Question navigator toggle */}
-              <button
-                onClick={() => setShowQuestionNav(!showQuestionNav)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 text-sm hover:bg-slate-200 transition-all"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                </svg>
-                Navigation
-              </button>
-
+            <div className="flex items-center justify-end">
               {currentQuestionIndex === questions.length - 1 ? (
                 <button
                   onClick={handleSubmitQuiz}
@@ -619,67 +617,6 @@ export default function QuizPage() {
           </div>
         </footer>
 
-        {/* Question navigator overlay */}
-        {showQuestionNav && (
-          <div className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm" onClick={() => setShowQuestionNav(false)}>
-            <div 
-              className="absolute bottom-24 left-1/2 -translate-x-1/2 w-full max-w-2xl p-4"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-2xl">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-slate-900 font-semibold">Navigation rapide</h3>
-                  <button 
-                    onClick={() => setShowQuestionNav(false)}
-                    className="text-slate-400 hover:text-slate-600 transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <div className="grid grid-cols-10 gap-2">
-                  {questions.map((q, index) => {
-                    const isAnswered = answers[q.id] !== undefined && answers[q.id] !== null;
-                    const isCurrent = index === currentQuestionIndex;
-                    return (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          setCurrentQuestionIndex(index);
-                          setShowQuestionNav(false);
-                        }}
-                        className={`w-full aspect-square rounded-lg font-medium text-sm transition-all ${
-                          isCurrent
-                            ? "bg-teal-600 text-white ring-2 ring-teal-400 ring-offset-2"
-                            : isAnswered
-                            ? "bg-teal-100 text-teal-700 border border-teal-200"
-                            : "bg-slate-100 text-slate-500 border border-slate-200 hover:bg-slate-200"
-                        }`}
-                      >
-                        {index + 1}
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="flex items-center gap-4 mt-4 pt-4 border-t border-slate-100">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded bg-teal-100 border border-teal-200" />
-                    <span className="text-slate-500 text-xs">Répondu</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded bg-slate-100 border border-slate-200" />
-                    <span className="text-slate-500 text-xs">Non répondu</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded bg-teal-600" />
-                    <span className="text-slate-500 text-xs">Actuel</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     );
   }

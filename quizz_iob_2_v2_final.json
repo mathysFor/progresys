@@ -716,13 +716,8 @@
   },
   {
     "id": "28",
-    "question": "Le regroupement de crédits hypothécaire s’adresse :",
+    "question": "Le regroupement de crédits hypothécaire s’adresse : (plusieurs réponses possibles)",
     "choices": [
-      {
-        "id": "28.1",
-        "text": "(plusieurs réponses possibles)",
-        "isCorrect": false
-      },
       {
         "id": "28.2",
         "text": "Aux propriétaires",
@@ -792,7 +787,7 @@
   },
   {
     "id": "31",
-    "question": "Quelles sont les dettes ne pouvant pas être prises en compte dans un regroupement de crédits ? (plusieurs réponses possibles) Autorisation de découvert Prêt à taux zéro",
+    "question": "Quelles sont les dettes ne pouvant pas être prises en compte dans un regroupement de crédits ? (plusieurs réponses possibles) ",
     "choices": [
       {
         "id": "31.1",
@@ -808,6 +803,16 @@
         "id": "31.3",
         "text": "Crédit immobilier pour un bien à usage professionnel",
         "isCorrect": true
+      },
+      {
+        "id": "31.4",
+        "text": "Autorisation de découvert",
+        "isCorrect": false
+      },
+      {
+        "id": "31.5",
+        "text": "Prêt à taux zéro",
+        "isCorrect": false
       }
     ],
     "correctChoiceIds": [
@@ -1946,6 +1951,31 @@
     ],
     "correctChoiceIds": [
       "79.1"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "80",
+    "question": "Une fois le compromis signé, pour trouver son financement, l’acquéreur dispose de :",
+    "choices": [
+      {
+        "id": "80.1",
+        "text": "30 jours",
+        "isCorrect": false
+      },
+      {
+        "id": "80.2",
+        "text": "45 jours",
+        "isCorrect": true
+      },
+      {
+        "id": "80.3",
+        "text": "95 jours",
+        "isCorrect": false
+      }
+    ],
+    "correctChoiceIds": [
+      "80.2"
     ],
     "type": "single"
   }
